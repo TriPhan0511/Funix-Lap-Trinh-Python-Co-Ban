@@ -12,13 +12,26 @@
 # 4
 #
 
+# Solution 1: Use the add method
 def count_nations(line):
-    line = line.strip()
+    line = line.strip().lower()
     if len(line) > 0:
-        nations = set(line.split(' '))
+        lst = line.split(' ')
+        nations = set()
+        for e in lst:
+            nations.add(e)
         return len(nations)
     else:
         print('Wrong input!')
+
+# # Solution 2: Use the constructor method
+# def count_nations(line):
+#     line = line.strip().lower()
+#     if len(line) > 0:
+#         nations = set(line.split(' '))
+#         return len(nations)
+#     else:
+#         print('Wrong input!')
 
 
 def main():
@@ -26,10 +39,11 @@ def main():
     # line = ''  # Wrong input!
     # line = '       '  # Wrong input!
     # line = '    France France Vietnam Germany Germany Italy     '  # 4
-    # line = 'France France Vietnam Germany Germany Italy' # 4
+    # line = 'FRANCE France Vietnam Germany Germany Italy'  # 4
+    # line = 'France France Vietnam Germany Germany Italy'  # 4
     # line = 'China USA Ukraina Russia China Holland Laos China Korea'  # 7
     # line = 'Vietnam China Vietnam China Laos Vietnam Campuchia Vietnam Vietnam Thailand'  # 5
-    
+
     line = input()
     number_of_nations = count_nations(line)
     if number_of_nations != None:
