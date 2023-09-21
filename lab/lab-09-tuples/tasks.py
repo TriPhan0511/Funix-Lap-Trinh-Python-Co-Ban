@@ -1,3 +1,8 @@
+'''
+Lab 9: Tuple với Python (Bài luyện tập I) (từ bài 51 đến 54)
+Link: https://codelearn.io/learning/python-co-ban
+'''
+
 # #
 # Task 51:
 # Given a list res of integers.
