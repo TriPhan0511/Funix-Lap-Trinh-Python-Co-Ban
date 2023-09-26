@@ -29,6 +29,7 @@ def tinhdiem_trungbinh(file_name):
         fhand = open(get_full_path(file_name))
     except:
         print(f'File cannot be opened: {file_name}')
+        exit()
 
     # Read lines in the file, compute average mark of every subject of all students
     # and return result as format: {‘Ma HS’: {‘Mon hoc’: Điểm TB}
@@ -39,8 +40,7 @@ def tinhdiem_trungbinh(file_name):
 
         # Get the name of subjects ('Toan', 'Ly', 'Hoa', 'Sinh', 'Van', 'Anh', 'Su', 'Dia')
         if ';' not in line:
-            subs = line.split(', ')
-            subjects = tuple(subs[1:])
+            subjects = tuple(line.split(', ')[1:])
             continue
 
         # Get ids and marks of students and return the result
@@ -72,10 +72,12 @@ def tinhdiem_trungbinh(file_name):
 
 
 def luudiem_trungbinh(file_name, d):
+    # Open the file for writing
     try:
         fout = open(get_full_path(file_name), 'w')
     except:
         print('Something went wrong when writing to a file.')
+        exit()
 
     # First line
     subjects = list(d['1'].keys())
