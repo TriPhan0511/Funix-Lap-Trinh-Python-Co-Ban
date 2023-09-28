@@ -34,6 +34,7 @@ def get_name_and_marks():
     '''Get name and marks from user'''
     name = input().strip()
     marks_inp = input().strip()
+
     if len(name) == 0 or len(marks_inp) == 0:
         print('Name or marks can not be empty!')
         exit()
