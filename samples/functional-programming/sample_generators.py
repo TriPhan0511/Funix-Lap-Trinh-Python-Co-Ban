@@ -38,65 +38,41 @@
 
 # --------------------------------------------------------
 
-# Sample: Create a prime number generator
 
-# def is_prime(num):
-#     if num <= 1:
-#         return False
-#     for i in range(2, num):
-#         if num % i == 0:
-#             return False
-#     return True
+# Sample:
+# Finding prime numbers is a common coding interview task.
+# The given code defines a function isPrime(x), which returns True if x is prime.
+# You need to create a generator function primeGenerator(),
+# that will take two numbers as arguments, and use the isPrime() function
+# to output the prime numbers in the given range (between the two arguments).
 
+# Sample Input
+# 10
+# 20
 
-# def get_primes():
-#     num = 2
-#     while True:
-#         if is_prime(num):
-#             yield num
-#         num += 1
-
-# # for i in get_primes():
-# #     print(i)
-
-# --------------------------------------------------------
-
-# # Sample: Create a first 100 prime numbers generator
-# def is_prime(num):
-#     if num <= 1:
-#         return False
-#     for i in range(2, num):
-#         if num % i == 0:
-#             return False
-#     return True
+# Sample Output
+# [11, 13, 17, 19]
 
 
-# # def get_primes(limit):
-# #     num = 2
-# #     while True and num <= limit:
-# #         if is_prime(num):
-# #             yield num
-# #         num += 1
-
-# def get_primes(limit):
-#     for i in range(2, limit + 1):
-#         if is_prime(i):
-#             yield i
+def isPrime(x):
+    if x < 2:
+        return False
+    elif x == 2:
+        return True
+    for n in range(2, x):
+        if x % n == 0:
+            return False
+    return True
 
 
-# for i in get_primes(100):
-#     print(i)
-
-# --------------------------------------------------------
-
-# Finite generators can be converted into lists
-# by passing them as arguments to the list function.
-
-# def numbers(x):
-#     for i in range(x):
-#         if i % 2 == 0:
-#             yield i
+def primeGenerator(a, b):
+    # your code goes here
+    for i in range(a, b):
+        if (isPrime(i)):
+            yield i
 
 
-# print(list(numbers(11)))
-# # [0, 2, 4, 6, 8, 10]
+f = int(input())
+t = int(input())
+
+print(list(primeGenerator(f, t)))
