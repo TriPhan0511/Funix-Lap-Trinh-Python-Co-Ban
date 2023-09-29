@@ -33,16 +33,18 @@
 
 
 class NhanVien:
-    def __init__(self, name, month, basic_pay, work_days, rate):
+    limit = 9000000
+
+    def __init__(self, name, month, basic_pay, work_days, coefficient):
         self.name = name
         self.month = month
         self.basic_pay = basic_pay
         self.work_days = work_days
-        self.rate = rate
+        self.coefficient = coefficient
 
     def tinh_luong(self):
-        total = self.basic_pay * self.work_days * self.rate - 1000000
-        if total > 9000000:
+        total = self.basic_pay * self.work_days * self.coefficient - 1000000
+        if total > self.limit:
             return int(total * 0.9)
         elif total > 0:
             return int(total)
@@ -82,7 +84,6 @@ def get_info():
 
 
 def main():
-
     info = get_info()
     nhp = NhanVien(info[0], info[1], info[2], info[3], info[4], )
     nhp.hien_thi_luong()
