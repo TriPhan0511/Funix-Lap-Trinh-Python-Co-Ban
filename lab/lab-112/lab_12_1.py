@@ -74,17 +74,25 @@ class QuanLy(NhanVien):
         else:
             bonus = self.tinh_luong() * (self.performance - 1) * 0.85
             pay = self.tinh_luong() + bonus
-        return pay
+        return int(pay)
+
+    # Overwrite method "hien_thi_luong"
+    def hien_thi_luong(self):
+        print(self.tinh_luong_thuong())
+        pay = format_currency(self.tinh_luong_thuong())
+        print(
+            f'Luong cua nhan vien {self.name} nhan duoc trong thang {self.month} la: {pay} VND.')
 
 
 # Sample input:
-# Nguyen Hai Phong
-# 3, 500000, 20, 1.5
-
 # Nguyen Hai Dang
 # 4 1000000 15 1.7 1.5
 def get_info():
     '''Get information from user input'''
+    # # Testing
+    # name = 'Nguyen Hai Dang'
+    # other = '4 1000000 15 1.7 1.5'
+
     name = input().strip()
     other = input().strip()
 
@@ -96,24 +104,44 @@ def get_info():
     if len(lst) != 5:
         print('You should enter month, basic pay, work days, pay rate and performance.')
         exit()
-    if lst[-1] < 0:
-        print('You should enter month, basic pay, work days, pay rate and performance.')
-        exit()
 
     try:
-        lst2 = [float(i) for i in lst]
-        lst2[0] = int(lst2[0])
+        lst = [float(i) for i in lst]
+        if lst[4] < 0:  # performance < 0
+            print(
+                'Performance rate should be greater than or equal to zero.')
+            exit()
+        lst[0] = int(lst[0])
     except ValueError:
         print('You should enter numbers for month, basic pay, work days, pay rate and performance.')
         exit()
 
-    return (name, lst2[0], lst2[1], lst2[2], lst2[3], lst[4])
+    return (name, lst[0], lst[1], lst[2], lst[3], lst[4])
+
+
+# Sample input:
+# 31421250
+# Sample ouput:
+# 31.461.250
+def format_currency(amount):
+    return f'{amount:,}'.replace(',', '.')
+
+
+# # Sample input:
+# # 31421250.45
+# # Sample ouput:
+# # $31.421.250,45
+# def format_currency_2(amount):
+#     currency = f'{amount:,.2f}'
+#     a, b = currency.split('.')
+#     a = a.replace(',', '.')
+#     return f'${a},{b}'
 
 
 def main():
     info = get_info()
-    nhp = NhanVien(info[0], info[1], info[2], info[3], info[4], )
-    nhp.hien_thi_luong()
+    nhd = QuanLy(info[0], info[1], info[2], info[3], info[4], info[5])
+    nhd.hien_thi_luong()
 
 
 if __name__ == '__main__':
