@@ -1,147 +1,100 @@
-"""lab 12.1"""
+"""lab 13"""
 
 ##
-# Đề bài:
-# Tiếp tục với bài tập về phương thức ở task trước, ở bài này chúng ta sẽ tính lương cho một quản lý
-# và in ra kết quả dựa theo lương nhận và hệ số hiệu quả. Hãy hoàn thiện các class NhanVien, QuanLy (kế thừa class NhanVien)
-# và 3 phương thức tinh_luong, hien_thi_luong và tinh_luong_thuong.
+# Ở bài Lab này, bạn sẽ được thực hành các thao tác để trích xuất dữ liệu từ website,
+# sau đó sử dụng các dữ liệu đã trích xuất được và thực hiện phần tích.
+# Chương trình sẽ sử dụng thư viện urllib để đọc HTML từ trang web
+# và phân tích cú pháp dữ liệu, trích xuất các dữ liệu cần thiết.
 
-# Công thức tính lương thực nhận cho quản lý:
+# Hướng dẫn chi tiết:
 
-# Lương tổng chưa thưởng = Lương cơ bản x số ngày làm việc x hệ số lương - 1 triệu đồng.
-# Nếu lương tổng chưa thưởng > 9 triệu VNĐ/tháng: Lương nhận chưa thưởng = 90% lương tổng chưa thưởng.
-# Các trường hợp khác: Lương nhận chưa thưởng = lương tổng chưa thưởng.
-# Nếu hệ số hiệu quả < 1: Lương thực nhận = lương nhận chưa thưởng * hệ số hiệu quả.
-# Các trường hợp khác: lương thưởng  = lương tổng chưa thưởng * (hệ số hiệu quả - 1) * 85%.
-# Lương thực nhận = lương nhận chưa thưởng + lương thưởng
+# Bạn sẽ cần trích xuất dữ liệu từ trang web:
+# https://py4e-data.dr-chuck.net/comments_1430669.html
+# Dữ liệu từ trang web được cấu tạo theo dạng bảng, bao gồm hai cột là Name và Comments
+# với các dữ liệu về thống kê số lượng comment của từng User, nhiệm vụ của bạn là
+# viết chương trình truy cập, trích xuất dữ liệu từ trang web, sau đó tính được hai chỉ số sau:
 
-# Ví dụ nếu bạn nhập
+# Số lượng hàng trong bảng
+# Tổng các giá trị của cột "Comments"
 
-# Nguyen Hai Dang
-# 4 1000000 15 1.7 1.5
+# Dữ liệu ở trên Website sẽ là một file HTML chứa bảng với format như sau:
 
-# Ý nghĩa của các con số trong input
-# Tên quản lý: 'Nguyen Hai Dang'
-# Tháng: 4
-# Lương cơ bản: 1000000 VND/ngày
-# Số ngày làm việc: 15
-# Hệ số lương: 1.7
-# Hệ số hiệu quả: 1.5
+# <tr><td>Modu</td><td><span class="comments">90</span></td></tr>
+# <tr><td>Kenzie</td><td><span class="comments">88</span></td></tr>
+# <tr><td>Hubert</td><td><span class="comments">87</span></td></tr>
 
-# Thì chương trình sẽ hiển thị ra
-
-# Luong cua nhan vien Nguyen Hai Dang nhan duoc trong thang 4 la: 31.461.250 VND.
-
-# Chú ý: Kết quả lương sẽ được làm tròn về dạng int.
+# Bạn phải tìm tất cả các thẻ <span> trong đoạn mã HTML và lấy ra các giá trị từ thẻ đó và tính tổng .
 #
 
-
-class NhanVien:
-    limit = 9000000
-
-    def __init__(self, name, month, basic_pay, work_days, coefficient):
-        self.name = name
-        self.month = month
-        self.basic_pay = basic_pay
-        self.work_days = work_days
-        self.coefficient = coefficient
-
-    def tinh_luong(self):
-        total = self.basic_pay * self.work_days * self.coefficient - 1000000
-        if total > self.limit:
-            return int(total * 0.9)
-        elif total > 0:
-            return int(total)
-        else:
-            return 0
-
-    def hien_thi_luong(self):
-        print(
-            f'Luong cua nhan vien {self.name} nhan duoc trong thang {self.month} la: {self.tinh_luong()} VND.')
+from urllib.request import urlopen
+from bs4 import BeautifulSoup
+import ssl
 
 
-class QuanLy(NhanVien):
-    def __init__(self, name, month, basic_pay, work_days, coefficient, performance):
-        super().__init__(name, month, basic_pay, work_days, coefficient)
-        self.performance = performance
-
-    def tinh_luong_thuong(self):
-        # Nếu hệ số hiệu quả < 1: Lương thực nhận = lương nhận chưa thưởng * hệ số hiệu quả.
-        # Các trường hợp khác: lương thưởng  = lương tổng chưa thưởng * (hệ số hiệu quả - 1) * 85%.
-        # Lương thực nhận = lương nhận chưa thưởng + lương thưởng
-        if self.performance < 1:
-            pay = self.tinh_luong() * self.performance
-        else:
-            bonus = self.tinh_luong() * (self.performance - 1) * 0.85
-            pay = self.tinh_luong() + bonus
-        return int(pay)
-
-    # Overwrite method "hien_thi_luong"
-    def hien_thi_luong(self):
-        print(self.tinh_luong_thuong())
-        pay = format_currency(self.tinh_luong_thuong())
-        print(
-            f'Luong cua nhan vien {self.name} nhan duoc trong thang {self.month} la: {pay} VND.')
+# Get context (Ignore SSL certificate errors)
+def get_context():
+    ctx = ssl.create_default_context()
+    ctx.check_hostname = False
+    ctx.verify_mode = ssl.CERT_NONE
+    return ctx
 
 
-# Sample input:
-# Nguyen Hai Dang
-# 4 1000000 15 1.7 1.5
-def get_info():
-    '''Get information from user input'''
-    # # Testing
-    # name = 'Nguyen Hai Dang'
-    # other = '4 1000000 15 1.7 1.5'
-
-    name = input().strip()
-    other = input().strip()
-
-    if len(name) == 0 or len(other) == 0:
-        print('Name or another information can not be empty!')
-        exit()
-
-    lst = other.split()
-    if len(lst) != 5:
-        print('You should enter month, basic pay, work days, pay rate and performance.')
-        exit()
-
-    try:
-        lst = [float(i) for i in lst]
-        if lst[4] < 0:  # performance < 0
-            print(
-                'Performance rate should be greater than or equal to zero.')
-            exit()
-        lst[0] = int(lst[0])
-    except ValueError:
-        print('You should enter numbers for month, basic pay, work days, pay rate and performance.')
-        exit()
-
-    return (name, lst[0], lst[1], lst[2], lst[3], lst[4])
+# Get all specific tags within an url
+def get_tags(url, tag_str='a'):
+    ctx = get_context()
+    html = urlopen(url, context=ctx).read()
+    soup = BeautifulSoup(html, 'html.parser')
+    # Retrieve all of the tags
+    return soup(tag_str)
 
 
-# Sample input:
-# 31421250
-# Sample ouput:
-# 31.461.250
-def format_currency(amount):
-    return f'{amount:,}'.replace(',', '.')
+# Compute number of rows which contain comments and how many comments in total.
+# Solution 1:
+def compute(url):
+    rows = get_tags(url, 'tr')
+    total = 0
+    for row in rows[1:]:
+        cells = row.contents
+        if len(cells) >= 2:
+            comment_cell = cells[1]
+            if len(comment_cell.contents) >= 1:
+                span_tag = comment_cell.contents[0]
+            if len(span_tag.contents) == 1:
+                try:
+                    value = int(span_tag.contents[0].strip())
+                except ValueError:
+                    continue
+                total += value
+    return (len(rows)-1, total)
 
 
-# # Sample input:
-# # 31421250.45
-# # Sample ouput:
-# # $31.421.250,45
-# def format_currency_2(amount):
-#     currency = f'{amount:,.2f}'
-#     a, b = currency.split('.')
-#     a = a.replace(',', '.')
-#     return f'${a},{b}'
+# Compute number of rows which contain comments and how many comments in total.
+# Solution 2:
+def compute2(url):
+    span_tags = get_tags(url, 'span')
+    total = 0
+    for tag in span_tags:
+        classes = tag.get('class', None)
+        if 'comments' in classes:
+            if len(tag.contents) == 1:
+                try:
+                    total += int(tag.contents[0].strip())
+                except ValueError:
+                    continue
+
+    return (len(span_tags), total)
 
 
 def main():
-    info = get_info()
-    nhd = QuanLy(info[0], info[1], info[2], info[3], info[4], info[5])
-    nhd.hien_thi_luong()
+    url = 'https://py4e-data.dr-chuck.net/comments_1430669.html'
+    # (rows, total) = compute(url)
+    (rows, total) = compute2(url)
+    print(f'There are {rows} rows in the table (table header is excluded)')
+    print(f"There are {total} comments in total.")
+
+    # Output:
+    # There are 50 rows in the table (table header is excluded)
+    # There are 2699 comments in total.
 
 
 if __name__ == '__main__':
