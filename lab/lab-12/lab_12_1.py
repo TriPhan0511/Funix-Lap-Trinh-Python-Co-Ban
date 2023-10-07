@@ -1,6 +1,6 @@
-"""lab 12.1"""
-
 ##
+# lab 12.1
+
 # Đề bài:
 # Tiếp tục với bài tập về phương thức ở task trước, ở bài này chúng ta sẽ tính lương cho một quản lý
 # và in ra kết quả dựa theo lương nhận và hệ số hiệu quả. Hãy hoàn thiện các class NhanVien, QuanLy (kế thừa class NhanVien)
