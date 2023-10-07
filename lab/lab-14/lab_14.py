@@ -63,6 +63,7 @@ def compute(url):
 def main():
     url = 'https://py4e-data.dr-chuck.net/comments_1430671.xml'
     print(f'There are {compute(url)} comments in total.')
+    # There are 2377 comments in total.
 
 
 if __name__ == '__main__':
