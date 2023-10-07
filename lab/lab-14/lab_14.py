@@ -1,6 +1,6 @@
-"""lab 14"""
-
 # #
+# lab 14
+
 # Tổng quan bài tập
 
 # Tương tự với bài Lab 13, ở bài Lab này bạn sẽ được thực hành thao tác
@@ -40,6 +40,7 @@ def get_context():
 
 
 def compute(url):
+    # Fetch data from a url
     try:
         ctx = get_context()
         data = urlopen(url, context=ctx).read().decode()
@@ -47,8 +48,10 @@ def compute(url):
         print(f'Can not connect to {url}')
         exit()
 
+    # Parse data which has just fetched and compute numbers of comments
     tree = ET.fromstring(data)
     comments = tree.findall('comments/comment')
+    print(len(comments))
     total = 0
     for comment in comments:
         try:

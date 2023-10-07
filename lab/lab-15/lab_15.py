@@ -1,6 +1,6 @@
-"""lab 15"""
-
 # #
+# lab 15
+
 # Ở Lab này bạn sẽ được thực hành thao tác trích xuất và xử lý dữ liệu dưới dạng JSON.
 # Chương trình sẽ sử dụng thư viện urllib để đọc HTML từ trang web
 # và phân tích cú pháp dữ liệu, trích xuất các dữ liệu cần thiết.
@@ -46,6 +46,7 @@ def get_context():
 
 
 def compute(url):
+    # Fetch data from a url
     try:
         ctx = get_context()
         data = urlopen(url, context=ctx).read().decode()
@@ -53,6 +54,7 @@ def compute(url):
         print(f'Can not connect to {url}')
         exit()
 
+    # Parse data which has just fetched into a Python dictionary
     try:
         res = json.loads(data)
     except:
@@ -61,17 +63,19 @@ def compute(url):
     if res is None:
         print('===== Failure To Retrieve')
         exit()
-
     # print(json.dumps(res, indent=2))
 
+    # Compute number of comments
     total = 0
     if 'comments' in res:
         comments = res['comments']
         for comment in comments:
             if 'count' in comment:
-                total += int(comment['count'])
+                try:
+                    total += int(comment['count'])
+                except ValueError:
+                    pass
 
-    print(total)
     return total
 
 
