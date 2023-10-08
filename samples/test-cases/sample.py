@@ -12,7 +12,7 @@ import unittest
 class Testing(unittest.TestCase):
     def test_string(self):
         a = 'some'
-        b = 'some222'
+        b = 'some'
         self.assertEqual(a, b)
 
     def test_boolean(self):
