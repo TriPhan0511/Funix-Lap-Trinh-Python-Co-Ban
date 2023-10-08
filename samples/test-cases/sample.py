@@ -1,35 +1,30 @@
 # #
-# Như đã giới thiệu ở trên, một Testcase sẽ bao gồm input, action và output mong đợi,
-# để tạo một Testcase kiểm tra xem output có giống với output mong muốn hay không
-# thì bạn có thể sử dụng test.testEqual hoặc assertEqual trong thư viện unittest, ví dụ như sau:
+# Link:
+# https://www.digitalocean.com/community/tutorials/python-unittest-unit-test-example
+# Now, let’s learn how to code for unit testing.
+# An individual testcase is created by subclassing unittest.TestCase.
+# By overriding or adding appropriate functions, we can add logic to test.
+# The following code will be succeeded if a is equals to b.
 
-# import unittest
-
-
-# class TestStringMethods(unittest.TestCase):
-#     # Test function to test equality of two values
-#     def test_nagative(self):
-#         first_value = 'geeks'
-#         second_value = 'geeks'
-#         # second_value = 'gfg'
-#         # Error message in case if test case got failed
-#         message = 'First value and second value are not equal!'
-#         # assertEqual to check equality of first value and second value
-#         self.assertEqual(first_value, second_value, message)
+import unittest
 
 
-# if __name__ == '__main__':
-#     unittest.main()
+class Testing(unittest.TestCase):
+    def test_string(self):
+        a = 'some'
+        b = 'some222'
+        self.assertEqual(a, b)
+
+    def test_boolean(self):
+        a = True
+        b = True
+        self.assertEqual(a, b)
+
+    def test_string_not_equal(self):
+        a = 'hello'
+        b = 'bonjour'
+        self.assertNotEqual(a, b)
 
 
-# lst = [1, 3, 2]
-# print(lst)
-# lst.sort(reverse=True)
-# print(lst)
-
-
-# lst = [1, 3, 2]
-# print(lst)
-# new_list = sorted(lst, reverse=True)
-# print(lst)
-# print(new_list)
+if __name__ == '__main__':
+    unittest.main()
