@@ -190,6 +190,32 @@ def loai_tamgiac(xA, yA, xB, yB, xC, yC):
     print(f'{msg} thường')
 
 
+def dientich_tamgiac(xA, yA, xB, yB, xC, yC):
+    # Độ dài các cạnh của tam giác
+    d_ab = khoangcach(xA, yA, xB, yB)
+    d_ac = khoangcach(xA, yA, xC, yC)
+    d_bc = khoangcach(xB, yB, xC, yC)
+    # Nửa chu vi p
+    p = (d_ab + d_ac + d_bc)
+    # Diện tích tam giác
+    return math.sqrt(p * (p-d_ab) * (p-d_ac) * (p-d_bc))
+
+
+def duongcao_tamgiac(xA, yA, xB, yB, xC, yC):
+    # Độ dài các cạnh của tam giác
+    d_ab = khoangcach(xA, yA, xB, yB)
+    d_ac = khoangcach(xA, yA, xC, yC)
+    d_bc = khoangcach(xB, yB, xC, yC)
+    # Nửa chu vi của tam giác
+    p = (d_ab + d_ac + d_bc) / 2
+
+    # Đường cao kẻ từ điểm A
+    tu_so = 2 * math.sqrt(p*(p-d_ab)*(p-d_ac)*(p-d_bc))
+    d_ah = tu_so / d_bc
+
+    return d_ah
+
+
 def main():
     # print("PYB101x - Assignment 01")
 
@@ -218,12 +244,12 @@ def main():
     (xA, yA, xB, yB, xC, yC) = (4, 1, 4, 2.5, 5, 2)
 
     # 3. Tính độ dài các cạnh của tam giác
-    distance_ab = khoangcach(xA, yA, xB, yB)
-    distance_ac = khoangcach(xA, yA, xC, yC)
-    distance_bc = khoangcach(xB, yB, xC, yC)
-    print(f'Độ dài cạnh AB  = {distance_ab} cm.')
-    print(f'Độ dài cạnh AC  = {distance_ac} cm.')
-    print(f'Độ dài cạnh BC  = {distance_bc} cm.')
+    d_ab = khoangcach(xA, yA, xB, yB)
+    d_ac = khoangcach(xA, yA, xC, yC)
+    d_bc = khoangcach(xB, yB, xC, yC)
+    print(f'Độ dài cạnh AB  = {d_ab} cm.')
+    print(f'Độ dài cạnh AC  = {d_ac} cm.')
+    print(f'Độ dài cạnh BC  = {d_bc} cm.')
 
     # 4. Kiểm tra xem ba điểm có tạo được một tam giác không
     if not kiemtra_tam_giac(xA, yA, xB, yB, xC, yC):
@@ -242,6 +268,14 @@ def main():
 
     # 6. Xét loại của tam giác ABC
     loai_tamgiac(xA, yA, xB, yB, xC, yC)
+
+    # 7. Tính diện tích tam giác
+    area = dientich_tamgiac(xA, yA, xB, yB, xC, yC)
+    print(f'Diện tích của tam giác: {area}')
+
+    # 8. Tính độ dài đường cao của tam giác
+    d_ha = duongcao_tamgiac(xA, yA, xB, yB, xC, yC)
+    print(f'Đường cao kẻ từ điểm A: {d_ha}')
 
 
 if __name__ == '__main__':
