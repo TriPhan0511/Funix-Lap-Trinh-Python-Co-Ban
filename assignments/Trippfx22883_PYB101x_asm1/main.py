@@ -1,5 +1,6 @@
 import math
-from tim_tructam_cua_tamgiac import findOrthocenter
+from sympy import solve
+from sympy.abc import x, y
 
 
 def nhap_toa_do_ba_diem():
@@ -30,7 +31,7 @@ def khoangcach(x1, y1, x2, y2):
     return round(math.sqrt((x2-x1)**2 + (y2-y1)**2), 2)
 
 
-def kiemtra_tam_giac(xA, yA, xB, yB, xC, yC):
+def kiemtra_tamgiac(xA, yA, xB, yB, xC, yC):
     '''Kiểm tra xem ba điểm có tạo được một tam giác không'''
     # Tính độ dài các cạnh của tam giác
     ab = khoangcach(xA, yA, xB, yB)
@@ -70,6 +71,7 @@ def goc_tu_hai_vector(v1, v2):
     return round(math.degrees(math.acos(cos)), 2)
 
 
+# Hàm dưới đây tính toán và trả về số đo độ của góc B trong tam giác ABC
 def goc(xA, yA, xB, yB, xC, yC):
     '''Tính số đo độ của góc từ tọa độ của ba điểm trong một tam giác'''
     v_ab = tao_vector(xA, yA, xB, yB)
@@ -90,7 +92,7 @@ def format_float(num):
 # Bạn cũng sẽ cần chỉ ra xem tam giác đó vuông ở đỉnh nào,
 # ví dụ: "Tam giác vuông tại đỉnh A".
 def tam_giac_vuong(xA, yA, xB, yB, xC, yC):
-    # msg = 'Tam giác vuông tại đỉnh'
+    '''Dựa vào tọa độ ba đỉnh của một tam giác, xác định tam giác đó có phải là tam giác vuông hay không'''
     goc_a = goc(xB, yB, xA, yA, xC, yC)
     goc_b = goc(xA, yA, xB, yB, xC, yC)
     goc_c = goc(xB, yB, xC, yC, xA, yA)
@@ -107,6 +109,7 @@ def tam_giac_vuong(xA, yA, xB, yB, xC, yC):
 # Bạn cũng sẽ chỉ ra xem góc nào là góc tù,
 # ví dụ: "Tam giác tù tại góc B".
 def tam_giac_tu(xA, yA, xB, yB, xC, yC):
+    '''Dựa vào tọa độ ba đỉnh của một tam giác, xác định tam giác đó có phải là tam giác tù hay không'''
     # msg = 'Tam giác tù tại góc'
     goc_a = goc(xB, yB, xA, yA, xC, yC)
     goc_b = goc(xA, yA, xB, yB, xC, yC)
@@ -124,7 +127,7 @@ def tam_giac_tu(xA, yA, xB, yB, xC, yC):
 # Bạn cũng sẽ cần chỉ ra xem tam giác cân ở đỉnh nào,
 # ví dụ: "Tam giác cân tại đỉnh C".
 def tam_giac_can(xA, yA, xB, yB, xC, yC):
-    # msg = 'Tam giác cân tại đỉnh'
+    '''Dựa vào tọa độ ba đỉnh của một tam giác, xác định tam giác đó có phải là tam giác cân hay không'''
     ab = khoangcach(xA, yA, xB, yB)
     ac = khoangcach(xA, yA, xC, yC)
     bc = khoangcach(xB, yB, xC, yC)
@@ -140,6 +143,7 @@ def tam_giac_can(xA, yA, xB, yB, xC, yC):
 # Tam giác đều: Tam giác có 3 cạnh bằng nhau hoặc 3 góc bằng 60 độ.
 # Bạn sẽ chỉ cần trả về như sau "Tam giác đều".
 def tam_giac_deu(xA, yA, xB, yB, xC, yC):
+    '''Dựa vào tọa độ ba đỉnh của một tam giác, xác định tam giác đó có phải là tam giác đều hay không'''
     ab = khoangcach(xA, yA, xB, yB)
     ac = khoangcach(xA, yA, xC, yC)
     bc = khoangcach(xB, yB, xC, yC)
@@ -158,7 +162,7 @@ def loai_tamgiac(xA, yA, xB, yB, xC, yC):
     # Tam giác đều
     tgd = tam_giac_deu(xA, yA, xB, yB, xC, yC)
     if tgd[0]:
-        print(f'{msg} {tgd[1]}')
+        print(f'{msg} {tgd[1]}.')
         return
 
     tgc = tam_giac_can(xA, yA, xB, yB, xC, yC)
@@ -167,31 +171,31 @@ def loai_tamgiac(xA, yA, xB, yB, xC, yC):
 
     # Tam giác vuông cân
     if tgc[0] and tgv[0]:
-        print(f'{msg} vuông cân tại đỉnh {tgc[1]}')
+        print(f'{msg} vuông cân tại đỉnh {tgc[1]}.')
         return
 
     # Tam giác tù và cân
     if tgc[0] and tgt[0]:
-        print(f'{msg} tù và cân tại đỉnh {tgc[1]}')
+        print(f'{msg} tù và cân tại đỉnh {tgc[1]}.')
         return
 
     # Tam giác vuông
     if tgv[0]:
-        print(f'{msg} vuông tại đỉnh {tgv[1]}')
+        print(f'{msg} vuông tại đỉnh {tgv[1]}.')
         return
 
     # Tam giác tù
     if tgt[0]:
-        print(f'{msg} tù tại góc {tgt[1]}')
+        print(f'{msg} tù tại góc {tgt[1]}.')
         return
 
     # Tam giác cân
     if tgc[0]:
-        print(f'{msg} cân tại đỉnh {tgc[1]}')
+        print(f'{msg} cân tại đỉnh {tgc[1]}.')
         return
 
     # Tam giác thường
-    print(f'{msg} thường')
+    print(f'{msg} thường.')
 
 
 # area = a * ha / 2
@@ -275,10 +279,6 @@ def duongcao_tamgiac(xA, yA, xB, yB, xC, yC):
     return {'A': ha, 'B': hb, 'C': hc}
 
 
-# Công thức tính độ dài đường trung tuyến được tính bằng
-# căn bậc 2 của một phần 2 tổng bình phương hai cạnh kề.
-# Sau đó trừ đi một phần tư bình phương cạnh đối.
-
 # Độ dài của đường trung tuyến kẻ từ điểm A xuống cạnh a đối diện
 # (b và c là hai cạnh cồn lại của tam giác):
 # ma = math.sqrt((b**2 + c**2) / 2 - a**2 / 4)
@@ -304,80 +304,70 @@ def trungtuyen_tamgiac(xA, yA, xB, yB, xC, yC):
 # xG = (xA + xB + xC) / 3
 # yG = (yA + yB + yC) / 3
 def trongtam_tamgiac(xA, yA, xB, yB, xC, yC):
+    '''Tính toán tọa độ của trọng tâm của một tam giác'''
     xG = format_float(round((xA + xB + xC) / 3, 2))
     yG = format_float(round((yA + yB + yC) / 3, 2))
-    return f'x = {xG}; y = {yG}'
-
-# Công thức tìm tọa độ trọng tâm G của tam giác ABC,
-# với A(xA;yA), B(xB;yB), C(xC;yC):
-# xG = (xA + xB + xC) / 3
-# yG = (yA + yB + yC) / 3
+    return (xG, yG)
 
 
-# def tructam_tamgiac(xA, yA, xB, yB, xC, yC):
-#     xH = format_float(round((xA + xB + xC) / 3, 2))
-#     yH = format_float(round((yA + yB + yC) / 3, 2))
-#     return f'x = {xH}; y = {yH}'
-
-
-def ptdc_1(xA, yA, xB, yB, xC, yC):
+# Hàm dưới đây trả về các hệ số của phương trình đường cao
+# của đường cao kẻ từ đỉnh A xuống cạnh BC đối diện.
+def phuongtrinh_duongcao(xA, yA, xB, yB, xC, yC):
+    '''Tính toán các hệ số của một phương trình đường cao trong tam giác'''
     point = (xA, yA)
     vector = tao_vector(xB, yB, xC, yC)
     z = vector[0]*(-point[0]) + vector[1]*(-point[1])
     return (vector[0], vector[1], z)
 
 
-def phuongtrinh_duongcao(xA, yA, xB, yB, xC, yC):
-    pA = (xA, yA)
-    pB = (xB, yB)
-    pC = (xC, yC)
-    v_ab = tao_vector(xA, yA, xB, yB)
-    v_ac = tao_vector(xA, yA, xC, yC)
-    v_bc = tao_vector(xB, yB, xC, yC)
-    # # Test
-    # print(
-    #     f'Points: A({pA[0]};{pA[1]}), B({pB[0]};{pB[1]}), C({pC[0]};{pC[1]}), ')
-    # print(
-    #     f'Vectors: AB({v_ab[0]};{v_ab[1]}), AC({v_ac[0]};{v_ac[1]}), BC({v_bc[0]};{v_bc[1]})')
+# Tọa độ (x;y) của trực tâm một tam giác là nghiệm
+# của hệ hai phương trình đường cao bất kỳ trong tam giác đó.
+def tructam_tamgiac(xA, yA, xB, yB, xC, yC):
+    '''Tính toán tọa độ của trực tâm của một tam giác'''
+    ptdc_qua_diem_A = phuongtrinh_duongcao(xA, yA, xB, yB, xC, yC)
+    ptdc_qua_diem_B = phuongtrinh_duongcao(xB, yB, xA, yA, xC, yC)
 
-    ptdc_qua_diem_A = ptdc_1(xA, yA, xB, yB, xC, yC)
-    ptdc_qua_diem_B = ptdc_1(xB, yB, xA, yA, xC, yC)
-    # ptdc_qua_diem_C = ptdc_1(xC, yC, xA, yA, xB, yB)
+    a1 = ptdc_qua_diem_A[0]
+    b1 = ptdc_qua_diem_A[1]
+    c1 = ptdc_qua_diem_A[2]
+    a2 = ptdc_qua_diem_B[0]
+    b2 = ptdc_qua_diem_B[1]
+    c2 = ptdc_qua_diem_B[2]
 
-    print(
-        f'Phương trình đường cao đi qua điểm A: {ptdc_qua_diem_A}')
-    print(f'Phương trình đường cao đi qua điểm B: {ptdc_qua_diem_B}')
-    # print(f'Phương trình đường cao đi qua điểm C: {ptdc_qua_diem_C}')
+    # Sử dụng thư viện sympy để tìm nghiệm của hệ hai phương trình đường cao
+    d = solve([a1*x + b1*y + c1, a2*x + b2*y + c2], x, y)
+    lst = list(d.values())
+    lst = [format_float(round(float(i), 2)) for i in lst]
 
-    
+    return tuple(lst)
 
 
 def main():
-    # print("PYB101x - Assignment 01")
+    print("PYB101x - Assignment 01")
 
     # 2. Nhập tọa độ 3 điểm từ bàn phím
-    # (xA, yA, xB, yB, xC, yC) = nhap_toa_do_ba_diem()
+    (xA, yA, xB, yB, xC, yC) = nhap_toa_do_ba_diem()
 
-    # # Loại của tam giác ABC: Tam giác đều
+    # # Loại của tam giác ABC: Tam giác thường.
+    # (xA, yA, xB, yB, xC, yC) = (4, 1, 4, 2.5, 5, 2)
+
+    # # Loại của tam giác ABC: Tam giác đều.
     # (xA, yA, xB, yB, xC, yC) = (0, 0, math.sqrt(3), 3, -math.sqrt(3), 3)
 
-    # # Loại của tam giác ABC: Tam giác vuông cân tại đỉnh B
+    # # Loại của tam giác ABC: Tam giác vuông cân tại đỉnh B.
     # (xA, yA, xB, yB, xC, yC) = (1, 1, 2, 2, 3, 1)
 
-    # # Loại của tam giác ABC: Tam giác tù và cân tại đỉnh B
+    # # Loại của tam giác ABC: Tam giác tù và cân tại đỉnh B.
     # (xA, yA, xB, yB, xC, yC) = (4, 1, 6, 2, 8, 1)
 
-    # # Loại của tam giác ABC: Tam giác vuông tại đỉnh A
+    # # Loại của tam giác ABC: Tam giác vuông tại đỉnh A.
     # (xA, yA, xB, yB, xC, yC) = (4, 1, 4, 3, 5, 1)
 
-    # # Loại của tam giác ABC: Tam giác tù tại góc B
+    # # Loại của tam giác ABC: Tam giác tù tại góc B.
     # (xA, yA, xB, yB, xC, yC) = (4, 1, 6, 2, 7, 1)
 
-    # # Loại của tam giác ABC: Tam giác cân tại đỉnh B
+    # # Loại của tam giác ABC: Tam giác cân tại đỉnh B.
     # (xA, yA, xB, yB, xC, yC) = (4, 1, 5, 3, 6, 1)
-
-    # # Loại của tam giác ABC: Tam giác cân thường
-    (xA, yA, xB, yB, xC, yC) = (4, 1, 4, 2.5, 5, 2)
 
     # 3. Tính độ dài các cạnh của tam giác
     d_ab = khoangcach(xA, yA, xB, yB)
@@ -388,7 +378,7 @@ def main():
     print(f'Độ dài cạnh BC  = {d_bc} cm.')
 
     # 4. Kiểm tra xem ba điểm có tạo được một tam giác không
-    if not kiemtra_tam_giac(xA, yA, xB, yB, xC, yC):
+    if not kiemtra_tamgiac(xA, yA, xB, yB, xC, yC):
         print('A,B, C không phải là một tam giác')
         exit()
     else:
@@ -408,47 +398,24 @@ def main():
     # 7. Tính diện tích tam giác
     area = dientich_tamgiac(xA, yA, xB, yB, xC, yC)
     print(f'Diện tích của tam giác = {area}')
-    # if tam_giac_deu(xA, yA, xB, yB, xC, yC)[0]:
-    #     area2 = dientich_tamgiac_deu(xA, yA, xB, yB, xC, yC)
-    #     print(f'Diện tích của tam giác (tính theo tam giác đều) = {area2}')
-    # if tam_giac_vuong(xA, yA, xB, yB, xC, yC)[0]:
-    #     area3 = dientich_tamgiac_vuong(xA, yA, xB, yB, xC, yC)
-    #     print(f'Diện tích của tam giác (tính theo tam giác vuông) = {area3}')
-    # if tam_giac_can(xA, yA, xB, yB, xC, yC)[0]:
-    #     area4 = dientich_tamgiac_can(xA, yA, xB, yB, xC, yC)
-    #     print(f'Diện tích của tam giác (tính theo tam giác cân) = {area4}')
 
     # 8. Tính độ dài đường cao của tam giác
     m_dict = duongcao_tamgiac(xA, yA, xB, yB, xC, yC)
     msg = 'Độ dài đường cao từ điểm'
-    msg2 = f'{msg} A = {m_dict["A"]}\n{msg} B = {m_dict["B"]}\n{msg} C = {m_dict["C"]}\n'
+    msg2 = f'{msg} A = {m_dict["A"]}\n{msg} B = {m_dict["B"]}\n{msg} C = {m_dict["C"]}'
     print(msg2)
 
     # 9. (Nâng cao) Tính độ dài đường trung tuyến của tam giác
-    # Độ dài trung tuyến từ điểm A = 15.23
-    # Độ dài trung tuyến từ điểm B = 13.45
-    # Độ dài trung tuyến từ điểm C = 18.54
     m_dict = trungtuyen_tamgiac(xA, yA, xB, yB, xC, yC)
     msg = 'Độ dài trung tuyến từ điểm'
-    msg2 = f'{msg} A = {m_dict["A"]}\n{msg} B = {m_dict["B"]}\n{msg} C = {m_dict["C"]}\n'
+    msg2 = f'{msg} A = {m_dict["A"]}\n{msg} B = {m_dict["B"]}\n{msg} C = {m_dict["C"]}'
     print(msg2)
 
     # 10. (Nâng cao) Tìm tọa độ trọng tâm và trực tâm tam giác
     g = trongtam_tamgiac(xA, yA, xB, yB, xC, yC)
-    print(f'Tọa độ trọng tâm của tam giác ABC: {g}')
-
-    print('-----------------------------------------------\n\n')
-
-    # (xA, yA, xB, yB, xC, yC) = (1, 2, 2, 1, -2, 4)
-    # phuongtrinh_duongcao(xA, yA, xB, yB, xC, yC)
-    # print(f'Tọa độ trực tâm của tam giác ABC: x = 3; y = 4')
-    
-
-    (xA, yA, xB, yB, xC, yC) = (1, 2, 2, 1, -2, 4)
-    A = [[xA, yA], [xB, yB], [xC, yC]]
-    # A = [[-3, 1], [2, 2], [-3, -5]]
-    print(f'Tọa độ trực tâm của tam giác ABC: ', end='')
-    findOrthocenter(A)
+    print(f'Tọa độ trọng tâm của tam giác ABC: x = {g[0]}; y = {g[1]}')
+    h = tructam_tamgiac(xA, yA, xB, yB, xC, yC)
+    print(f'Tọa độ trực tâm của tam giác ABC: x = {h[0]}; y = {h[1]}')
 
 
 if __name__ == '__main__':
