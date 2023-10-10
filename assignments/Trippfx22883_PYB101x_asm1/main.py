@@ -147,6 +147,9 @@ def tam_giac_deu(xA, yA, xB, yB, xC, yC):
     return (False,)
 
 
+# Xác định tam giác thuộc một trong các loại tam giác sau:
+# Tam giác đều, tam giác vuông, tam giác tù, tam giác cân,
+# tam giác vuông cân, tam giác tù và cân hoặc tam giác thường
 def loai_tamgiac(xA, yA, xB, yB, xC, yC):
     '''Xác định loại tam giác từ tọa độ của ba điểm'''
     msg = 'Loại của tam giác ABC: Tam giác'
@@ -190,30 +193,86 @@ def loai_tamgiac(xA, yA, xB, yB, xC, yC):
     print(f'{msg} thường')
 
 
+# area = a * ha / 2
+# Trong đó area là diện tích của tam giác cân tại đỉnh A,
+# ha là chiều dài đường cao kẻ từ điểm A xuống cạnh a.
+def dientich_tamgiac_can(xA, yA, xB, yB, xC, yC):
+    '''Tính diện tích của tam giác cân'''
+    d_ab = khoangcach(xA, yA, xB, yB)
+    d_ac = khoangcach(xA, yA, xC, yC)
+    d_bc = khoangcach(xB, yB, xC, yC)
+    h_dict = duongcao_tamgiac(xA, yA, xB, yB, xC, yC)
+    tgc = tam_giac_can(xA, yA, xB, yB, xC, yC)
+    if tgc[1] == 'A':
+        return round(d_bc * h_dict['A'] / 2, 2)
+    if tgc[1] == 'B':
+        return round(d_ac * h_dict['B'] / 2, 2)
+    if tgc[1] == 'C':
+        return round(d_ab * h_dict['C'] / 2, 2)
+
+
+# area = a**2 * math.sqrt(3) / 4
+# Trong đó area là diện tích của tam giác đều,
+# có độ dài các cạnh là a.
+def dientich_tamgiac_deu(xA, yA, xB, yB, xC, yC):
+    '''Tính diện tích của tam giác đều'''
+    d_ab = khoangcach(xA, yA, xB, yB)
+    return round(d_ab**2 * math.sqrt(3) / 4, 2)
+
+
+# area = a * b / 2
+# Trong đó area là diện tích của tam giác vuống tại đỉnh A,
+# có hai cạnh góc vuông (hay còn gọi là cạnh bên) là a và b.
+def dientich_tamgiac_vuong(xA, yA, xB, yB, xC, yC):
+    '''Tính diện tích của tam giác vuông'''
+    d_ab = khoangcach(xA, yA, xB, yB)
+    d_ac = khoangcach(xA, yA, xC, yC)
+    d_bc = khoangcach(xB, yB, xC, yC)
+    tgv = tam_giac_vuong(xA, yA, xB, yB, xC, yC)
+    if tgv[1] == 'A':
+        return round(d_ab * d_ac / 2, 2)
+    if tgv[1] == 'B':
+        return round(d_ab * d_bc / 2, 2)
+    if tgv[1] == 'C':
+        return round(d_ac * d_bc / 2, 2)
+
+
+# Sử dụng công thức Heron:
+# area = math.sqrt(p*(p-a)*(p-b)*(p-c))
+# Trong đó a, b, c là chiều dài của ba cạnh tam giác
+# và p là nửa chu vi của tam giác:
+# p = (a + b + c) / 2
 def dientich_tamgiac(xA, yA, xB, yB, xC, yC):
+    '''Tính diện tích của tam giác'''
     # Độ dài các cạnh của tam giác
     d_ab = khoangcach(xA, yA, xB, yB)
     d_ac = khoangcach(xA, yA, xC, yC)
     d_bc = khoangcach(xB, yB, xC, yC)
     # Nửa chu vi p
-    p = (d_ab + d_ac + d_bc)
+    p = (d_ab + d_ac + d_bc) / 2
     # Diện tích tam giác
-    return math.sqrt(p * (p-d_ab) * (p-d_ac) * (p-d_bc))
+    return round(math.sqrt(p * (p-d_ab) * (p-d_ac) * (p-d_bc)), 2)
 
 
+# Ví dụ:
+# Độ dài của đường cao kẻ từ điểm A xuống cạnh a:
+# ha = 2 * area / a
 def duongcao_tamgiac(xA, yA, xB, yB, xC, yC):
+    '''Tính độ dài của các đường cao trong một tam giác'''
     # Độ dài các cạnh của tam giác
     d_ab = khoangcach(xA, yA, xB, yB)
     d_ac = khoangcach(xA, yA, xC, yC)
     d_bc = khoangcach(xB, yB, xC, yC)
-    # Nửa chu vi của tam giác
-    p = (d_ab + d_ac + d_bc) / 2
+    # Diện tích tam giác
+    area = dientich_tamgiac(xA, yA, xB, yB, xC, yC)
+    # Đường cao kẻ từ điểm A xuống cạnh BC
+    ha = round(2 * area / d_bc, 2)
+    # Đường cao kẻ từ điểm B xuống cạnh AC
+    hb = round(2 * area / d_ac, 2)
+    # Đường cao kẻ từ điểm C xuống cạnh AB
+    hc = round(2 * area / d_ab, 2)
 
-    # Đường cao kẻ từ điểm A
-    tu_so = 2 * math.sqrt(p*(p-d_ab)*(p-d_ac)*(p-d_bc))
-    d_ah = tu_so / d_bc
-
-    return d_ah
+    return {'A': ha, 'B': hb, 'C': hc}
 
 
 def main():
@@ -240,7 +299,7 @@ def main():
     # # Loại của tam giác ABC: Tam giác cân tại đỉnh B
     # (xA, yA, xB, yB, xC, yC) = (4, 1, 5, 3, 6, 1)
 
-    # Loại của tam giác ABC: Tam giác cân thường
+    # # Loại của tam giác ABC: Tam giác cân thường
     (xA, yA, xB, yB, xC, yC) = (4, 1, 4, 2.5, 5, 2)
 
     # 3. Tính độ dài các cạnh của tam giác
@@ -271,11 +330,22 @@ def main():
 
     # 7. Tính diện tích tam giác
     area = dientich_tamgiac(xA, yA, xB, yB, xC, yC)
-    print(f'Diện tích của tam giác: {area}')
+    print(f'Diện tích của tam giác = {area}')
+    # if tam_giac_deu(xA, yA, xB, yB, xC, yC)[0]:
+    #     area2 = dientich_tamgiac_deu(xA, yA, xB, yB, xC, yC)
+    #     print(f'Diện tích của tam giác (tính theo tam giác đều) = {area2}')
+    # if tam_giac_vuong(xA, yA, xB, yB, xC, yC)[0]:
+    #     area3 = dientich_tamgiac_vuong(xA, yA, xB, yB, xC, yC)
+    #     print(f'Diện tích của tam giác (tính theo tam giác vuông) = {area3}')
+    # if tam_giac_can(xA, yA, xB, yB, xC, yC)[0]:
+    #     area4 = dientich_tamgiac_can(xA, yA, xB, yB, xC, yC)
+    #     print(f'Diện tích của tam giác (tính theo tam giác cân) = {area4}')
 
     # 8. Tính độ dài đường cao của tam giác
-    d_ha = duongcao_tamgiac(xA, yA, xB, yB, xC, yC)
-    print(f'Đường cao kẻ từ điểm A: {d_ha}')
+    h_dict = duongcao_tamgiac(xA, yA, xB, yB, xC, yC)
+    msg = 'Độ dài đường cao từ điểm'
+    msg2 = f'{msg} A = {h_dict["A"]}\n{msg} B = {h_dict["B"]}\n{msg} C = {h_dict["C"]}\n'
+    print(msg2)
 
 
 if __name__ == '__main__':
