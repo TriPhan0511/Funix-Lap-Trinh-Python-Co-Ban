@@ -26,6 +26,22 @@
 #
 
 
+# Sample data in xml file:
+# <commentinfo>
+#     <note>This file contains the actual data for your assignment - good luck!</note>
+#     <comments>
+#         <comment>
+#             <name>Nicolina</name>
+#             <count>99</count>
+#         </comment>
+#         <comment>
+#             <name>Vedantsinh</name>
+#             <count>99</count>
+#         </comment>
+#         ...
+#     <comments>
+# </commentinfo>
+
 import ssl
 from urllib.request import urlopen
 from urllib.error import URLError
@@ -51,7 +67,7 @@ def compute(url):
     # Parse data which has just fetched and compute numbers of comments
     tree = ET.fromstring(data)
     comments = tree.findall('comments/comment')
-    print(len(comments))
+    # print(f'len={len(comments)}')
     total = 0
     for comment in comments:
         try:

@@ -1,4 +1,4 @@
-from utilities import format_currency
+from utilities import format_currency, compute_fine, compute_tax
 
 
 # id: Mã số nhân viên
@@ -62,12 +62,14 @@ class Employee:
             self.working_days * self.working_performance
 
         thuong_bo_phan = 0  # todo
-        phat_di_muon = 0  # todo
+        phat_di_muon = compute_fine(self.late_comming_days)  # todo
+        print(f'phat_di_muon:{phat_di_muon}')  # todo
+        # phat_di_muon = 0  # todo
         tong_thu_nhap = tong_thu_nhap_chua_thuong + \
             self.bonus + thuong_bo_phan - phat_di_muon
 
         tong_thu_nhap_chua_thue = tong_thu_nhap * 89.5 / 100
-        
+
         khoan_thue_can_nop = 0  # todo
         luong_thuc_nhan = tong_thu_nhap_chua_thue - khoan_thue_can_nop
 
