@@ -63,7 +63,7 @@ def compute(url):
     if res is None:
         print('===== Failure To Retrieve')
         exit()
-    # print(json.dumps(res, indent=2))
+    print(json.dumps(res, indent=2))
 
     # Compute number of comments
     total = 0
