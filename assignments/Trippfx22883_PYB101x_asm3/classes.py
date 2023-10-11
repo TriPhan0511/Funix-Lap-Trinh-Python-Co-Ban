@@ -40,6 +40,6 @@ class Department:
 
     def __str__(self) -> str:
         out = f'Mã bộ phận: {str(self.id).upper()}'
-        out += f'\nThưởng bộ phận: {format_currency(self.bonus_salary)} (VND)'
+        out += f'\nThưởng bộ phận: {format_currency(self.bonus_salary)}'
         # out += f'\nThưởng bộ phận: {self.bonus_salary} (VND)'
         return out

@@ -28,33 +28,46 @@ departments = [
 ]
 
 
-# employees = [
-#     Employee('emp01', 'John Doe', 5000000, 20, 'it', 1.5, 300, 1)
-# ]
-
-
+# Create a list of options
 def create_menu():
-    menu = '\n1. Hiển thị danh sách nhân viên.'
-    menu += '\n2. Hiển thị danh sách bộ phận.'
-    menu += '\n3. Thêm nhân viên mới.'
-    menu += '\n4. Xóa nhân viên theo ID.'
-    menu += '\n5. Xóa bộ phận theo ID.'
-    menu += '\n6. Hiển thị bảng lương.'
-    menu += '\n7. Thoát.'
-    menu += '\n\nMời bạn nhập chức năng mong muốn: '
-    return menu
+    items = [
+        '1. Hiển thị danh sách nhân viên.',
+        '2. Hiển thị danh sách bộ phận.',
+        '3. Thêm nhân viên mới.',
+        '4. Xóa nhân viên theo ID.',
+        '5. Xóa bộ phận theo ID.',
+        '6. Hiển thị bảng lương.',
+        '7. Thoát.',
+        '\nMời bạn nhập chức năng mong muốn: '
+    ]
+    return ('\n'.join(items))
+
+
+# Get choice from user
+def get_input():
+    while True:
+        try:
+            inp = int(input(f'\n{create_menu()}'))
+        except ValueError:
+            print('\nNhập sai.\nVui lòng nhập một số từ 1 đến 7 để lựa chọn menu!')
+            continue
+        if inp < 1 or inp > 7:
+            print('\nNhập sai.\nVui lòng nhập một số từ 1 đến 7 để lựa chọn menu!')
+            continue
+        return inp
+
+
+# Hiển thị danh sách bộ phận
+# Display a list of departments
+def display_departments(departments, message):
+    print(message)
+    for dep in departments:
+        print(f'{dep}\n')
 
 
 def main():
     while True:
-        try:
-            inp = int(input(create_menu()))
-        except ValueError:
-
-            print('\nNhập sai.\nVui lòng nhập một số từ 1 đến 7 để lựa chọn menu!')
-            continue
-
-        print(f'\nYour input: {inp}')
+        inp = get_input()
 
         if inp == 7:
             print('\nThank you! See you soon. Bye!')
@@ -63,17 +76,15 @@ def main():
         if inp == 1:
             print('Bạn đã lựa chọn "Hiển thị danh sách nhân viên"')
         if inp == 2:
-            print('Bạn đã lựa chọn "Hiển thị danh sách bộ phận."\n')
-            for dep in departments:
-                print(dep)
+            display_departments(departments, '\n===== Danh sách bộ phận =====\n')
         if inp == 3:
-            print('Bạn đã lựa chọn "Thêm nhân viên mới."')
+            print('Thêm nhân viên mới.')
         if inp == 4:
-            print('Bạn đã lựa chọn "Xóa nhân viên theo ID"')
+            print('Xóa nhân viên theo ID')
         if inp == 5:
-            print('Bạn đã lựa chọn "Xóa bộ phận theo ID."')
+            print('Xóa bộ phận theo ID.')
         if inp == 6:
-            print('Bạn đã lựa chọn "Hiển thị bảng lương."')
+            print('Hiển thị bảng lương.')
 
 
 if __name__ == '__main__':
