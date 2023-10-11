@@ -1,5 +1,5 @@
 from classes import Department, Employee, Manager
-from utilities import get_late_comming_fines
+from utilities import fetch_fines
 import json
 
 
@@ -89,37 +89,5 @@ def main():
             print('Hiển thị bảng lương.')
 
 
-def compute_fine(lst):
-    print(json.dumps(lst, indent=2))
-
-    for d in lst:
-        if 'min' in d:
-            min = d['min']
-        else:
-            min = 0
-
-        if 'max' in d:
-            max = d['max']
-        else:
-            max = 31
-
-        if 'value' in d:
-            value = d['value']
-        else:
-            value = 31
-
-        late_days = 4
-        print(f'min={min}, max={max}, value={value}, late_days={late_days}')
-        # result = 0
-        # if min <= late_days < max:
-        if min < late_days and late_days < max:
-            result = value
-            print(f'result={result}')
-            return result
-
-
 if __name__ == '__main__':
-    # main()
-    lst = get_late_comming_fines(
-        'https://firebasestorage.googleapis.com/v0/b/funix-way.appspot.com/o/xSeries%2FChung%20chi%20dieu%20kien%2FPYB101x_1.1%2FASM_Resources%2Flate_coming.json?alt=media&token=55246ee9-44fa-4642-aca2-dde101d705de')
-    ressult = compute_fine(lst)
+    main()
