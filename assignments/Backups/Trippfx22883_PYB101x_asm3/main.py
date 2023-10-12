@@ -37,6 +37,19 @@ employees = [
 ]
 
 # employees = [
+#     Employee('NV000', 'Nguyễn Văn A', 200000, 26, 'SALE01', 1, 500000, 0),
+#     Employee('NV001', 'Nguyễn Văn A', 200000, 26, 'SALE01', 1, 500000, 1),
+#     Employee('NV002', 'Lê Thị Thủy', 300000, 26, 'MARKETING', 1.5, 700000, 2),
+#     Employee('NV003', 'Lê Thị Thủy', 300000, 26, 'MARKETING', 1.5, 700000, 3),
+#     Employee('NV004', 'Lê Thị Thủy', 300000, 26, 'MARKETING', 1.5, 700000, 4),
+#     Employee('NV005', 'Lê Thị Thủy', 300000, 26, 'MARKETING', 1.5, 700000, 5),
+#     Employee('NV006', 'Lê Thị Thủy', 300000, 26, 'MARKETING', 1.5, 700000, 6),
+#     Employee('NV007', 'Lê Thị Thủy', 300000, 26, 'MARKETING', 1.5, 700000, 7),
+#     Employee('NV008', 'Lê Thị Thủy', 300000, 26, 'MARKETING', 1.5, 700000, 8),
+#     Manager('NV009', 'Trần Thị Huệ', 500000, 26, 'MARKETING', 1.5, 700000, 9),
+# ]
+
+# employees = [
 #     Employee('NV001', 'Nguyễn Văn A', 200000, 26, 'SALE01', 1, 500000, 2),
 #     Employee('NV003', 'Lê Thị Thủy', 300000, 26, 'MARKETING', 1.5, 700000, 3),
 #     # Manager('NV002', 'Trần Thị Huệ', 500000, 26, 'MARKETING', 1.5, 700000, 3),
@@ -72,27 +85,12 @@ def get_input():
         return inp
 
 
-# Display departments or employees
+# Hiển thị danh sách bộ phận
+# Display a list of departments
 def display_list(lst, message):
     print(message)
     for dep in lst:
         print(f'{dep}\n')
-
-
-# Sample output:
-# Mã số: NV001
-# Thu nhập thực nhận: 4,961,880 (VND)
-def display_salary(emp, depts):
-    # test
-    print(f'type(emp):\n{type(emp)}')
-    out = f'Mã số: {emp.id}'
-    out += f'Thu nhập thực nhận: {emp.compute_salary(depts)}'
-    return f'{out}\n'
-
-
-def display_salaries(emps, depts):
-    for emp in emps:
-        display_salary(emp, depts)
 
 
 def main():
@@ -117,40 +115,7 @@ def main():
             print('Xóa bộ phận theo ID.')
         if inp == 6:
             print('Hiển thị bảng lương.')
-            display_salary(employees, departments)
-
-
-# def compute_bonus_salary(departments, employee):
-#     lst = [(dept.id, dept.bonus_salary) for dept in departments]
-#     dept_id = employee.department
-#     for id, bonus_salary in lst:
-#         if id == dept_id:
-#             return bonus_salary
 
 
 if __name__ == '__main__':
     main()
-
-    # emps = [
-    #     Employee('NV000', 'Nguyễn Văn A', 200000,
-    #              26, 'ACCOUNTING', 1, 500000, 0),
-    #     Employee('NV000', 'Nguyễn Văn A', 200000,
-    #              26, 'MARKETING', 1, 500000, 0),
-    #     Employee('NV000', 'Nguyễn Văn A', 200000,
-    #              26, 'IT', 1, 500000, 0),
-    #     Employee('NV000', 'Nguyễn Văn A', 200000,
-    #              26, 'SALE01', 1, 500000, 0),
-    #     Employee('NV000', 'Nguyễn Văn A', 200000,
-    #              26, 'SALE02', 1, 500000, 0),
-    # ]
-
-    # for emp in emps:
-    #     print(compute_bonus_salary(departments, emp))
-
-# departments = [
-#     Department('ACCOUNTING', 450000),
-#     Department('MARKETING', 1000000),
-#     Department('IT', 650000),
-#     Department('SALE01', 500000),
-#     Department('SALE02', 550000),
-# ]

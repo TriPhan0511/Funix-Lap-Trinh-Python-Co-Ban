@@ -167,14 +167,25 @@ def compute_tax(url, amount):
             # print(min, max, value / 100)
             return value / 100 * amount * 1000000
 
+# def compute_tax(tax_rates, amount):
+#     amount = amount / 1000000
+#     mins, maxes, values = tax_rates
+#     for i in range(1, len(mins)):
+#         min = mins[i]
+#         value = values[i]
+#         try:
+#             max = maxes[i]
+#         except IndexError:
+#             max = sys.maxsize
+#             # max = 8000
 
-# def compute_bonus_salary(departments, employee):
-def compute_bonus_salary(emp, depts):
-    lst = [(dept.id, dept.bonus_salary) for dept in depts]
-    dept_id = emp.department
-    for id, bonus_salary in lst:
-        if id == dept_id:
-            return bonus_salary
+#         if amount <= 0:
+#             return 0
+#         if min <= amount < max:
+#             # test
+#             print(min, max, value / 100)
+#             tax = value / 100 * amount * 1000000
+#             return tax
 
 
 def main():

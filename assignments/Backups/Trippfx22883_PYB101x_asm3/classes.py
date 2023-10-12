@@ -1,4 +1,4 @@
-from utilities import format_currency, compute_fine, compute_tax, compute_bonus_salary
+from utilities import format_currency, compute_fine, compute_tax
 
 
 # id: Mã số nhân viên
@@ -62,14 +62,11 @@ class Employee:
     # Bạn cần tính khoản thuế cần đóng theo công thức ở bước 2.
     # lương thực nhận = tổng thu nhập chưa thuế - khoản thuế cần nộp
 
-    def compute_salary(self, depts=[]):
+    def compute_salary(self):
         tong_thu_nhap_chua_thuong = self.salary_base * \
             self.working_days * self.working_performance
 
-        # todo: chua tinh den nhan vien la QUAN LY
-        # Chú ý: các quản lý sẽ được thưởng thêm 10% thưởng bộ phận.
-        thuong_bo_phan = compute_bonus_salary(self, depts)
-        # thuong_bo_phan = 0  # todo
+        thuong_bo_phan = 0  # todo
         phat_di_muon = compute_fine(self.url_fines, self.late_comming_days)
         tong_thu_nhap = tong_thu_nhap_chua_thuong + \
             self.bonus + thuong_bo_phan - phat_di_muon
@@ -81,23 +78,6 @@ class Employee:
         luong_thuc_nhan = tong_thu_nhap_chua_thue - khoan_thue_can_nop
 
         return round(luong_thuc_nhan)
-
-    # def compute_salary(self):
-    #     tong_thu_nhap_chua_thuong = self.salary_base * \
-    #         self.working_days * self.working_performance
-
-        # thuong_bo_phan = 0  # todo
-    #     phat_di_muon = compute_fine(self.url_fines, self.late_comming_days)
-    #     tong_thu_nhap = tong_thu_nhap_chua_thuong + \
-    #         self.bonus + thuong_bo_phan - phat_di_muon
-
-    #     tong_thu_nhap_chua_thue = tong_thu_nhap * 89.5 / 100
-
-    #     khoan_thue_can_nop = compute_tax(
-    #         self.url_tax_rates, tong_thu_nhap_chua_thue)
-    #     luong_thuc_nhan = tong_thu_nhap_chua_thue - khoan_thue_can_nop
-
-    #     return round(luong_thuc_nhan)
 
 
 class Manager(Employee):
