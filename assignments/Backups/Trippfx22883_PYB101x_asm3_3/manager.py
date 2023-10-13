@@ -1,15 +1,8 @@
-
-
 from employee import Employee
 from utilities import format_currency
 
 
 class Manager(Employee):
-    def __init__(self, id, name, salary_base, working_days, department, working_performance, bonus, late_comming_days):
-        super().__init__(id, name, salary_base, working_days,
-                         department, working_performance, bonus, late_comming_days)
-        self.is_manager = True
-
     def __str__(self) -> str:
         out = f'Mã số: {self.id}'
         out += f'\nMã bộ phận: {self.department}'
@@ -20,6 +13,7 @@ class Manager(Employee):
         out += f'\nHệ số hiệu quả: {self.working_performance}'
         out += f'\nThưởng: {format_currency(self.bonus)}'
         out += f'\nSố ngày đi muộn: {self.late_comming_days}'
+        # out += f'\nTEST - Lương thực nhận: {format_currency(self.compute_salary())}'
         return out
 
     # Overwrite the "compute_bonus_salary" method

@@ -12,7 +12,8 @@ class Manager(Employee):
         self.working_performance = working_performance
         self.bonus = bonus
         self.late_comming_days = late_comming_days
-        self.is_manager = 1
+        self.is_manager = True
+        # self.is_manager = 1
 
     def __str__(self) -> str:
         out = f'Mã số: {self.id}'

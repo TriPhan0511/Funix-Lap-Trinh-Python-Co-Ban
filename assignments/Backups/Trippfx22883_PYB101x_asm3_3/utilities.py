@@ -172,31 +172,34 @@ def get_full_path(file_name):
     return f'{absolute_path}/{file_name}'
 
 
-# # Write a list of custom objects (example: list of Employee objects) to a json file
-# def write_list(lst, fhand):
+# # Write a custom object (example: an Employee object) to a json file
+# def write_object(file_name, obj):
 #     try:
 #         # json.dumps(): Serialize a Python object into a JSON string
-#         lst = [json.dumps(obj.__dict__) for obj in lst]
-#         fhand.write('[\n')
-#         for i in range(len(lst)):
-#             item = lst[i]
-#             if i == len(lst) - 1:
-#                 fhand.write(f'\t\t{item}\n')
-#             else:
-#                 fhand.write(f'\t\t{item},\n')
-#         fhand.write('\t')
-#         fhand.write(']')
+#         json_object = json.dumps(obj.__dict__, indent=4)
 #     except Exception as err:
+#         print(f'Something went wrong: {err}')
+#         return False
+#     # Write data to file
+#     try:
+#         fhand = open(get_full_path(file_name), 'w')
+#         fhand.write(json_object)
+#     except FileNotFoundError:
+#         print(f'File can not be opened for writing: {file_name}')
+#         return False
+#     except Exception as err:
+#         print(f'Something went wrong when writing to file: {file_name}')
 #         print(err)
 #         return False
+#     fhand.close()
 #     return True
+
 
 # Write a list of custom objects (example: list of Employee objects) to a json file
 def write_list(lst, fhand):
     try:
         # json.dumps(): Serialize a Python object into a JSON string
-        # lst = [json.dumps(obj.__dict__) for obj in lst]
-        # for i in lst:
+        lst = [json.dumps(obj.__dict__) for obj in lst]
         fhand.write('[\n')
         for i in range(len(lst)):
             item = lst[i]

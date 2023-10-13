@@ -3,6 +3,18 @@ from utilities import format_currency
 
 
 class Manager(Employee):
+    def __init__(self, id, name, salary_base, working_days, department, working_performance, bonus, late_comming_days):
+        self.id = id
+        self.name = name
+        self.salary_base = salary_base
+        self.working_days = working_days
+        self.department = department  # Mã bộ phận
+        self.working_performance = working_performance
+        self.bonus = bonus
+        self.late_comming_days = late_comming_days
+        self.is_manager = True
+        # self.is_manager = 1
+
     def __str__(self) -> str:
         out = f'Mã số: {self.id}'
         out += f'\nMã bộ phận: {self.department}'

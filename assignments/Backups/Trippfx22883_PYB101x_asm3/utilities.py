@@ -163,39 +163,17 @@ def compute_tax(url, amount):
         if min <= amount < max:
             return value / 100 * amount * 1000000
 
-# -----------------------------------------------------------------------
-
 
 def get_full_path(file_name):
     # This function returns the path of the file
     absolute_path = os.path.dirname(__file__)
     return f'{absolute_path}/{file_name}'
 
-
-# # Write a custom object (example: an Employee object) to a json file
-# def write_object(file_name, obj):
-#     try:
-#         # json.dumps(): Serialize a Python object into a JSON string
-#         json_object = json.dumps(obj.__dict__, indent=4)
-#     except Exception as err:
-#         print(f'Something went wrong: {err}')
-#         return False
-#     # Write data to file
-#     try:
-#         fhand = open(get_full_path(file_name), 'w')
-#         fhand.write(json_object)
-#     except FileNotFoundError:
-#         print(f'File can not be opened for writing: {file_name}')
-#         return False
-#     except Exception as err:
-#         print(f'Something went wrong when writing to file: {file_name}')
-#         print(err)
-#         return False
-#     fhand.close()
-#     return True
-
+# -----------------------------------------------------------------------
 
 # Write a list of custom objects (example: list of Employee objects) to a json file
+
+
 def write_list(lst, fhand):
     try:
         # json.dumps(): Serialize a Python object into a JSON string
@@ -239,12 +217,12 @@ def write_data_to_file(file_name, d):
     return True
 
 
-# Read from a json file
+# Read from a json file and return a Python dictionary
+# which contains a list of Department objects and a list of Employee objects.
 def read_json_file(file_name):
     try:
         fhand = open(get_full_path(file_name))
         data = fhand.read()
-        # print(len(data))
         if len(data) == 0:
             return None
     except FileNotFoundError:
@@ -257,26 +235,13 @@ def read_json_file(file_name):
         print(err)
         return None
     return result
-# # Read from a json file
-# def read_json_file(file_name):
-#     try:
-#         fhand = open(get_full_path(file_name))
-#         data = fhand.read()
-#     except FileNotFoundError:
-#         print(f'Can not open file {file_name}')
-#         exit()
-#     try:
-#         # Parse a JSON string into a Python object
-#         result = json.loads(data)
-#     except Exception as err:
-#         print(err)
-#         exit()
-#     return result
 
 
-def main():
-    pass
-
-
-if __name__ == '__main__':
-    main()
+# Display departments or employees
+def display_list(lst, msg='===== Display list =====', empty_msg='Empty list'):
+    print(msg)
+    if len(lst) == 0:
+        print(empty_msg)
+    for item in lst:
+        print(type(item)) # Test
+        print(f'{item}\n')

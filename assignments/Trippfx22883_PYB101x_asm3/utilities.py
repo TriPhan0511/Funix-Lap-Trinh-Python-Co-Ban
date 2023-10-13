@@ -217,7 +217,8 @@ def write_data_to_file(file_name, d):
     return True
 
 
-# Read from a json file
+# Read from a json file and return a Python dictionary
+# which contains a list of Department objects and a list of Employee objects.
 def read_json_file(file_name):
     try:
         fhand = open(get_full_path(file_name))
@@ -234,3 +235,13 @@ def read_json_file(file_name):
         print(err)
         return None
     return result
+
+
+# Display departments or employees
+def display_list(lst, msg='===== Display list =====', empty_msg='Empty list'):
+    print(msg)
+    if len(lst) == 0:
+        print(empty_msg)
+    for item in lst:
+        print(type(item)) # Test
+        print(f'{item}\n')

@@ -1,51 +1,10 @@
 from department import Department
 from employee import Employee
 from manager import Manager
-from utilities import format_currency, read_json_file, write_data_to_file
-import json
+from utilities import format_currency,  write_data_to_file, display_list
+from utilities_2 import fetch_departments_and_employees
 
 JSON_FILE_NAME = 'sample.json'
-
-
-
-
-departments = [
-    Department('ACCOUNTING', 450000),
-    Department('MARKETING', 1000000),
-    Department('IT', 650000),
-    Department('SALE01', 500000),
-    Department('SALE02', 550000),
-]
-
-
-# Mã số: NV001
-# Mã bộ phận: SALE001
-# Chức vụ: Nhân viên
-# Họ và tên: Nguyễn Văn A
-# Hệ số lương: 200,000 (VND)
-# Số ngày làm việc: 26 (ngày)
-# Hệ số hiệu quả: 1
-# Thưởng: 500,000 (VND)
-# Số ngày đi muộn: 2
-employees = [
-    Employee('NV001', 'Nguyễn Văn A', 200000,
-             26, 'ACCOUNTING', 1, 500000, 0),
-    Employee('NV002', 'Nguyễn Văn A', 200000,
-             26, 'MARKETING', 1, 500000, 0),
-    Employee('NV003', 'Nguyễn Văn A', 200000,
-             26, 'IT', 1, 500000, 0),
-    Employee('NV004', 'Nguyễn Văn A', 200000,
-             26, 'SALE01', 1, 500000, 0),
-    Manager('NV005', 'Nguyễn Văn A', 200000,
-            26, 'SALE02', 1, 500000, 0),
-]
-
-
-# employees = [
-#     Employee('NV001', 'Nguyễn Văn A', 200000, 26, 'SALE01', 1, 500000, 2),
-#     Employee('NV003', 'Lê Thị Thủy', 300000, 26, 'MARKETING', 1.5, 700000, 3),
-#     # Manager('NV002', 'Trần Thị Huệ', 500000, 26, 'MARKETING', 1.5, 700000, 3),
-# ]
 
 
 # Create a list of options
@@ -77,11 +36,13 @@ def get_input():
         return inp
 
 
-# Display departments or employees
-def display_list(lst, msg='Display list'):
-    print(msg)
-    for dep in lst:
-        print(f'{dep}\n')
+# # Display departments or employees
+# def display_list(lst, msg='===== Display list =====', empty_msg='Empty list'):
+#     print(msg)
+#     if len(lst) == 0:
+#         print(empty_msg)
+#     for item in lst:
+#         print(f'{item}\n')
 
 
 # Display id and salary of an employee
@@ -101,7 +62,8 @@ def display_salaries_table(emps, depts, msg='Salaries Table'):
         display_salary(emp, depts)
 
 
-def quit_program(success_msg, error_msg):
+# Quit the program
+def quit_program(departments, employees, success_msg, error_msg):
     d = {
         'departments': departments,
         'employees': employees
@@ -115,19 +77,15 @@ def quit_program(success_msg, error_msg):
 
 
 def main():
+    departments, employees = fetch_departments_and_employees(JSON_FILE_NAME)
     while True:
         inp = get_input()
-
-        if inp == 7:
-            quit_program(
-                f'\nĐã lưu dữ liệu vào file "{JSON_FILE_NAME}".', '\nĐã có lỗi xảy ra trong quá trình lưu dữ liệu.')
-
         if inp == 1:
             display_list(
-                employees, '\n********** Danh sách nhân viên **********\n')
+                employees, '\n********** Danh sách nhân viên **********\n', 'Danh sách chưa có nhân viên nào.')
         if inp == 2:
             display_list(
-                departments, '\n********** Danh sách bộ phận **********\n')
+                departments, '\n********** Danh sách bộ phận **********\n', 'Danh sách chưa có bộ phận nào.')
         if inp == 3:
             print('Thêm nhân viên mới.')
         if inp == 4:
@@ -137,6 +95,9 @@ def main():
         if inp == 6:
             display_salaries_table(
                 employees, departments, '\n********** Hiển thị bảng lương **********\n')
+        if inp == 7:
+            quit_program(departments, employees,
+                         f'\nĐã lưu dữ liệu vào file "{JSON_FILE_NAME}".', '\nĐã có lỗi xảy ra trong quá trình lưu dữ liệu.')
 
 
 if __name__ == '__main__':
