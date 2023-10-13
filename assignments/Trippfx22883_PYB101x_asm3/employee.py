@@ -44,7 +44,6 @@ class Employee:
         out += f'\nHệ số hiệu quả: {self.working_performance}'
         out += f'\nThưởng: {format_currency(self.bonus)}'
         out += f'\nSố ngày đi muộn: {self.late_comming_days}'
-        # out += f'\nTEST - Lương thực nhận: {format_currency(self.compute_salary())}'
         return out
 
     def compute_bonus_salary(self, depts=[]):
@@ -52,9 +51,6 @@ class Employee:
         dept_id = self.department
         for id, bonus_salary in lst:
             if id == dept_id:
-                print('IN EMPLOYEE CLASS')
-                # if isinstance(emp, Manager):
-                #     return bonus_salary + bonus_salary * 0.1
                 return bonus_salary
 
     # 3. Viết hàm tính lương cho nhân viên
@@ -77,11 +73,7 @@ class Employee:
         tong_thu_nhap_chua_thuong = self.salary_base * \
             self.working_days * self.working_performance
 
-        # todo: chua tinh den nhan vien la QUAN LY
-        # Chú ý: các quản lý sẽ được thưởng thêm 10% thưởng bộ phận.
         thuong_bo_phan = self.compute_bonus_salary(depts)
-        # thuong_bo_phan = compute_bonus_salary(self, depts)
-        # thuong_bo_phan = 0  # todo
         phat_di_muon = compute_fine(self.url_fines, self.late_comming_days)
         tong_thu_nhap = tong_thu_nhap_chua_thuong + \
             self.bonus + thuong_bo_phan - phat_di_muon

@@ -1,0 +1,16 @@
+{
+	"departments": [
+		{"id": "ACCOUNTING", "bonus_salary": 450000},
+		{"id": "MARKETING", "bonus_salary": 1000000},
+		{"id": "IT", "bonus_salary": 650000},
+		{"id": "SALE01", "bonus_salary": 500000},
+		{"id": "SALE02", "bonus_salary": 550000}
+	],
+	"employees": [
+		{"id": "NV001", "name": "Nguy\u1ec5n V\u0103n A", "salary_base": 200000, "working_days": 26, "department": "ACCOUNTING", "working_performance": 1, "bonus": 500000, "late_comming_days": 0},
+		{"id": "NV002", "name": "Nguy\u1ec5n V\u0103n A", "salary_base": 200000, "working_days": 26, "department": "MARKETING", "working_performance": 1, "bonus": 500000, "late_comming_days": 0},
+		{"id": "NV003", "name": "Nguy\u1ec5n V\u0103n A", "salary_base": 200000, "working_days": 26, "department": "IT", "working_performance": 1, "bonus": 500000, "late_comming_days": 0},
+		{"id": "NV004", "name": "Nguy\u1ec5n V\u0103n A", "salary_base": 200000, "working_days": 26, "department": "SALE01", "working_performance": 1, "bonus": 500000, "late_comming_days": 0},
+		{"id": "NV005", "name": "Nguy\u1ec5n V\u0103n A", "salary_base": 200000, "working_days": 26, "department": "SALE02", "working_performance": 1, "bonus": 500000, "late_comming_days": 0}
+	]
+}

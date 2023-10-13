@@ -16,14 +16,13 @@ class Manager(Employee):
         # out += f'\nTEST - Lương thực nhận: {format_currency(self.compute_salary())}'
         return out
 
-
-# Overwrite the "compute_bonus_salary" method
-def compute_bonus_salary(self, depts=[]):
-    lst = [(dept.id, dept.bonus_salary) for dept in depts]
-    dept_id = self.department
-    for id, bonus_salary in lst:
-        if id == dept_id:
-            if isinstance(self, Manager):
-                print('HERE')
-                return bonus_salary + bonus_salary * 0.1
-            return bonus_salary
+    # Overwrite the "compute_bonus_salary" method
+    # Các quản lý sẽ được thưởng thêm 10% thưởng bộ phận.
+    def compute_bonus_salary(self, depts=[]):
+        lst = [(dept.id, dept.bonus_salary) for dept in depts]
+        dept_id = self.department
+        for id, bonus_salary in lst:
+            if id == dept_id:
+                if isinstance(self, Manager):
+                    return bonus_salary + bonus_salary * 0.1
+                return bonus_salary

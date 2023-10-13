@@ -1,7 +1,10 @@
 from department import Department
 from employee import Employee
 from manager import Manager
-from utilities import format_currency
+from utilities import format_currency, read_json_file, write_data_to_file
+import json
+
+JSON_FILE_NAME = 'sample.json'
 
 
 departments = [
@@ -79,21 +82,36 @@ def display_list(lst, msg='Display list'):
         print(f'{dep}\n')
 
 
+# Display id and salary of an employee
 # Sample output:
 # Mã số: NV001
 # Thu nhập thực nhận: 4,961,880 (VND)
 def display_salary(emp, depts):
     out = f'Mã số: {emp.id}'
     out += f'\nThu nhập thực nhận: {format_currency(emp.compute_salary(depts))}'
-    if isinstance(emp, Manager):
-        out += f'\nChức vụ: Quản Lý'
     print(f'{out}\n')
 
 
+# Display all of employees' salaries
 def display_salaries_table(emps, depts, msg='Salaries Table'):
     print(msg)
     for emp in emps:
         display_salary(emp, depts)
+
+
+def quit_program():
+    d = {
+        'departments': departments,
+        'employees': employees
+    }
+    res = write_data_to_file(JSON_FILE_NAME, d)
+    if res:
+        msg = f'\nData was saved into a file named "{JSON_FILE_NAME}"'
+    else:
+        msg = '\nSomething went wrong when saving data into a file!!!'
+    msg += '\nThank you! See you soon. Bye!'
+    print(msg)
+    exit()
 
 
 def main():
@@ -101,8 +119,7 @@ def main():
         inp = get_input()
 
         if inp == 7:
-            print('\nThank you! See you soon. Bye!')
-            exit()
+            quit_program()
 
         if inp == 1:
             display_list(
