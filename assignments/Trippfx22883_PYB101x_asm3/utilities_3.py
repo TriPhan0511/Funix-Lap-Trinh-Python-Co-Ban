@@ -138,9 +138,9 @@ def display_ids(lst, msg='=========================='):
 
 # Add a new employee
 def add_employee(depts, emps):
-    # test
-    display_ids(depts, '====== DEPARTMENT IDS =====')
-    display_ids(emps, '====== EMPLOYEE IDS =====')
+    # # test
+    # display_ids(depts, '====== DEPARTMENT IDS =====')
+    # display_ids(emps, '====== EMPLOYEE IDS =====')
 
     print('Thêm nhân viên mới ...')
     id = get_employee_id(emps)
@@ -169,11 +169,12 @@ def add_employee(depts, emps):
 
 
 def main():
-    depts, emps = fetch_departments_and_employees('test.json')
-    add_employee(depts, emps)
+    pass
+    # depts, emps = fetch_departments_and_employees('test.json')
+    # add_employee(depts, emps)
 
-    display_ids(depts, '====== DEPARTMENT IDS =====')
-    display_ids(emps, '====== EMPLOYEE IDS =====')
+    # display_ids(depts, '====== DEPARTMENT IDS =====')
+    # display_ids(emps, '====== EMPLOYEE IDS =====')
 
 
 if __name__ == '__main__':
