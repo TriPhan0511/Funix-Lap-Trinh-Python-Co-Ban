@@ -4,6 +4,7 @@ from urllib.error import URLError
 import json
 import xml.etree.ElementTree as ET
 import sys
+import os
 
 
 # Sample input:
@@ -35,10 +36,7 @@ def fetch_fines(url):
     try:
         res = json.loads(data)
     except:
-        res = None
-
-    if res is None:
-        print('===== Failure To Retrieve')
+        print('===== Failure To Retrieve =====')
         exit()
 
     # # test
@@ -163,58 +161,121 @@ def compute_tax(url, amount):
         if amount <= 0:
             return 0
         if min <= amount < max:
-            # test
-            # print(min, max, value / 100)
             return value / 100 * amount * 1000000
 
-# def compute_tax(tax_rates, amount):
-#     amount = amount / 1000000
-#     mins, maxes, values = tax_rates
-#     for i in range(1, len(mins)):
-#         min = mins[i]
-#         value = values[i]
-#         try:
-#             max = maxes[i]
-#         except IndexError:
-#             max = sys.maxsize
-#             # max = 8000
+# -----------------------------------------------------------------------
 
-#         if amount <= 0:
-#             return 0
-#         if min <= amount < max:
-#             # test
-#             print(min, max, value / 100)
-#             tax = value / 100 * amount * 1000000
-#             return tax
+
+def get_full_path(file_name):
+    # This function returns the path of the file
+    absolute_path = os.path.dirname(__file__)
+    return f'{absolute_path}/{file_name}'
+
+
+# # Write a custom object (example: an Employee object) to a json file
+# def write_object(file_name, obj):
+#     try:
+#         # json.dumps(): Serialize a Python object into a JSON string
+#         json_object = json.dumps(obj.__dict__, indent=4)
+#     except Exception as err:
+#         print(f'Something went wrong: {err}')
+#         return False
+#     # Write data to file
+#     try:
+#         fhand = open(get_full_path(file_name), 'w')
+#         fhand.write(json_object)
+#     except FileNotFoundError:
+#         print(f'File can not be opened for writing: {file_name}')
+#         return False
+#     except Exception as err:
+#         print(f'Something went wrong when writing to file: {file_name}')
+#         print(err)
+#         return False
+#     fhand.close()
+#     return True
+
+
+# Write a list of custom objects (example: list of Employee objects) to a json file
+def write_list(lst, fhand):
+    try:
+        # json.dumps(): Serialize a Python object into a JSON string
+        lst = [json.dumps(obj.__dict__) for obj in lst]
+        fhand.write('[\n')
+        for i in range(len(lst)):
+            item = lst[i]
+            if i == len(lst) - 1:
+                fhand.write(f'\t\t{item}\n')
+            else:
+                fhand.write(f'\t\t{item},\n')
+        fhand.write('\t')
+        fhand.write(']')
+    except Exception as err:
+        print(err)
+        return False
+    return True
+
+
+# Write a Python dictionary to a json file
+# The values in that dictionary are lists of custom objects
+# Example of custom objects: Objects of Department class, objects of Employee class,
+def write_data_to_file(file_name, d):
+    keys = list(d.keys())
+    values = list(d.values())
+    try:
+        fhand = open(get_full_path(file_name), 'w')
+        fhand.write('{' + '\n')
+        for i in range(len(keys)):
+            fhand.write(f'\t{json.dumps(keys[i])}: ')
+            if i == len(keys) - 1:
+                write_list(values[i], fhand)
+            else:
+                write_list(values[i], fhand)
+                fhand.write(',\n')
+        fhand.write('\n}')
+        fhand.close()
+    except Exception as err:
+        print(err)
+        return False
+    return True
+
+
+# Read from a json file
+def read_json_file(file_name):
+    try:
+        fhand = open(get_full_path(file_name))
+        data = fhand.read()
+        # print(len(data))
+        if len(data) == 0:
+            return None
+    except FileNotFoundError:
+        print(f'Can not open file {file_name}')
+        return None
+    try:
+        # Parse a JSON string into a Python object
+        result = json.loads(data)
+    except Exception as err:
+        print(err)
+        return None
+    return result
+# # Read from a json file
+# def read_json_file(file_name):
+#     try:
+#         fhand = open(get_full_path(file_name))
+#         data = fhand.read()
+#     except FileNotFoundError:
+#         print(f'Can not open file {file_name}')
+#         exit()
+#     try:
+#         # Parse a JSON string into a Python object
+#         result = json.loads(data)
+#     except Exception as err:
+#         print(err)
+#         exit()
+#     return result
 
 
 def main():
-    # # test compute_fine(url, late_comming_days)
-    # url = 'https://firebasestorage.googleapis.com/v0/b/funix-way.appspot.com/o/xSeries%2FChung%20chi%20dieu%20kien%2FPYB101x_1.1%2FASM_Resources%2Flate_coming.json?alt=media&token=55246ee9-44fa-4642-aca2-dde101d705de'
-    # for late_comming_days in range(10):
-    #     fine = compute_fine(url, late_comming_days)
-    #     print(f'fine={format_currency(fine)}\n')
-    # -----------------------------------------------------------------------
-
-    # # test fetch_tax_rate(url) function
-    # url = 'https://firebasestorage.googleapis.com/v0/b/funix-way.appspot.com/o/xSeries%2FChung%20chi%20dieu%20kien%2FPYB101x_1.1%2FASM_Resources%2Ftax.xml?alt=media&token=f7a6f73d-9e6d-4807-bb14-efc6875442c7'
-    # tax_rates = fetch_tax_rates(url)
-    # # mins, maxes, values = tax_rates
-    # # # [0, 5, 10, 0, 18, 32, 52, 80]
-    # # # [5, 10, 18, 5, 32, 52, 80]
-    # # # [5, 10, 15, 5, 20, 25, 30, 35]
-    # -----------------------------------------------------------------------
-
-    # test compute_tax(url, amount) function
-    url = 'https://firebasestorage.googleapis.com/v0/b/funix-way.appspot.com/o/xSeries%2FChung%20chi%20dieu%20kien%2FPYB101x_1.1%2FASM_Resources%2Ftax.xml?alt=media&token=f7a6f73d-9e6d-4807-bb14-efc6875442c7'
-    amounts = [0, 500000, 2000000, 4999999,
-               5000000, 9999999, 80000000, 100000000]
-    for amount in amounts:
-        # print(f'amount={format_currency(amount)}')
-        # print(f'amount2={format_currency(amount/1000000)}')
-        tax = compute_tax(url, amount)
-        print(f'tax={format_currency(tax)}')
-        print('--------------')
+    pass
 
 
 if __name__ == '__main__':

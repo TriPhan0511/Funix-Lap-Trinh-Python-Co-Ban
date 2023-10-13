@@ -1,12 +1,6 @@
-from department import Department
-from employee import Employee
-from manager import Manager
-from utilities import format_currency, read_json_file, write_data_to_file
+from classes import Department, Employee, Manager
+from utilities import fetch_fines
 import json
-
-JSON_FILE_NAME = 'sample.json'
-
-
 
 
 departments = [
@@ -27,19 +21,33 @@ departments = [
 # Hệ số hiệu quả: 1
 # Thưởng: 500,000 (VND)
 # Số ngày đi muộn: 2
+
+
 employees = [
-    Employee('NV001', 'Nguyễn Văn A', 200000,
-             26, 'ACCOUNTING', 1, 500000, 0),
-    Employee('NV002', 'Nguyễn Văn A', 200000,
-             26, 'MARKETING', 1, 500000, 0),
-    Employee('NV003', 'Nguyễn Văn A', 200000,
-             26, 'IT', 1, 500000, 0),
-    Employee('NV004', 'Nguyễn Văn A', 200000,
-             26, 'SALE01', 1, 500000, 0),
-    Manager('NV005', 'Nguyễn Văn A', 200000,
-            26, 'SALE02', 1, 500000, 0),
+    Employee('NV000', 'Nguyễn Văn A', 200000, 26, 'SALE01', 1, 500000, 0),
+    Employee('NV001', 'Nguyễn Văn A', 200000, 26, 'SALE01', 1, 500000, 1),
+    Employee('NV002', 'Lê Thị Thủy', 300000, 26, 'MARKETING', 1.5, 700000, 2),
+    Employee('NV003', 'Lê Thị Thủy', 300000, 26, 'MARKETING', 1.5, 700000, 3),
+    Employee('NV004', 'Lê Thị Thủy', 300000, 26, 'MARKETING', 1.5, 700000, 4),
+    Employee('NV005', 'Lê Thị Thủy', 300000, 26, 'MARKETING', 1.5, 700000, 5),
+    Employee('NV006', 'Lê Thị Thủy', 300000, 26, 'MARKETING', 1.5, 700000, 6),
+    Employee('NV007', 'Lê Thị Thủy', 300000, 26, 'MARKETING', 1.5, 700000, 7),
+    Employee('NV008', 'Lê Thị Thủy', 300000, 26, 'MARKETING', 1.5, 700000, 8),
+    Manager('NV009', 'Trần Thị Huệ', 500000, 26, 'MARKETING', 1.5, 700000, 9),
 ]
 
+# employees = [
+#     Employee('NV000', 'Nguyễn Văn A', 200000, 26, 'SALE01', 1, 500000, 0),
+#     Employee('NV001', 'Nguyễn Văn A', 200000, 26, 'SALE01', 1, 500000, 1),
+#     Employee('NV002', 'Lê Thị Thủy', 300000, 26, 'MARKETING', 1.5, 700000, 2),
+#     Employee('NV003', 'Lê Thị Thủy', 300000, 26, 'MARKETING', 1.5, 700000, 3),
+#     Employee('NV004', 'Lê Thị Thủy', 300000, 26, 'MARKETING', 1.5, 700000, 4),
+#     Employee('NV005', 'Lê Thị Thủy', 300000, 26, 'MARKETING', 1.5, 700000, 5),
+#     Employee('NV006', 'Lê Thị Thủy', 300000, 26, 'MARKETING', 1.5, 700000, 6),
+#     Employee('NV007', 'Lê Thị Thủy', 300000, 26, 'MARKETING', 1.5, 700000, 7),
+#     Employee('NV008', 'Lê Thị Thủy', 300000, 26, 'MARKETING', 1.5, 700000, 8),
+#     Manager('NV009', 'Trần Thị Huệ', 500000, 26, 'MARKETING', 1.5, 700000, 9),
+# ]
 
 # employees = [
 #     Employee('NV001', 'Nguyễn Văn A', 200000, 26, 'SALE01', 1, 500000, 2),
@@ -77,41 +85,12 @@ def get_input():
         return inp
 
 
-# Display departments or employees
-def display_list(lst, msg='Display list'):
-    print(msg)
+# Hiển thị danh sách bộ phận
+# Display a list of departments
+def display_list(lst, message):
+    print(message)
     for dep in lst:
         print(f'{dep}\n')
-
-
-# Display id and salary of an employee
-# Sample output:
-# Mã số: NV001
-# Thu nhập thực nhận: 4,961,880 (VND)
-def display_salary(emp, depts):
-    out = f'Mã số: {emp.id}'
-    out += f'\nThu nhập thực nhận: {format_currency(emp.compute_salary(depts))}'
-    print(f'{out}\n')
-
-
-# Display all of employees' salaries
-def display_salaries_table(emps, depts, msg='Salaries Table'):
-    print(msg)
-    for emp in emps:
-        display_salary(emp, depts)
-
-
-def quit_program(success_msg, error_msg):
-    d = {
-        'departments': departments,
-        'employees': employees
-    }
-    res = write_data_to_file(JSON_FILE_NAME, d)
-    if res:
-        print(success_msg)
-    else:
-        print(error_msg)
-    exit()
 
 
 def main():
@@ -119,8 +98,8 @@ def main():
         inp = get_input()
 
         if inp == 7:
-            quit_program(
-                f'\nĐã lưu dữ liệu vào file "{JSON_FILE_NAME}".', '\nĐã có lỗi xảy ra trong quá trình lưu dữ liệu.')
+            print('\nThank you! See you soon. Bye!')
+            exit()
 
         if inp == 1:
             display_list(
@@ -135,8 +114,7 @@ def main():
         if inp == 5:
             print('Xóa bộ phận theo ID.')
         if inp == 6:
-            display_salaries_table(
-                employees, departments, '\n********** Hiển thị bảng lương **********\n')
+            print('Hiển thị bảng lương.')
 
 
 if __name__ == '__main__':

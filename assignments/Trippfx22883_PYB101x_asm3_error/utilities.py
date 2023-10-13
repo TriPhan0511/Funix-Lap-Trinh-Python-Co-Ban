@@ -163,21 +163,40 @@ def compute_tax(url, amount):
         if min <= amount < max:
             return value / 100 * amount * 1000000
 
+# -----------------------------------------------------------------------
+
 
 def get_full_path(file_name):
     # This function returns the path of the file
     absolute_path = os.path.dirname(__file__)
     return f'{absolute_path}/{file_name}'
 
-# -----------------------------------------------------------------------
+
+# # Write a list of custom objects (example: list of Employee objects) to a json file
+# def write_list(lst, fhand):
+#     try:
+#         # json.dumps(): Serialize a Python object into a JSON string
+#         lst = [json.dumps(obj.__dict__) for obj in lst]
+#         fhand.write('[\n')
+#         for i in range(len(lst)):
+#             item = lst[i]
+#             if i == len(lst) - 1:
+#                 fhand.write(f'\t\t{item}\n')
+#             else:
+#                 fhand.write(f'\t\t{item},\n')
+#         fhand.write('\t')
+#         fhand.write(']')
+#     except Exception as err:
+#         print(err)
+#         return False
+#     return True
 
 # Write a list of custom objects (example: list of Employee objects) to a json file
-
-
 def write_list(lst, fhand):
     try:
         # json.dumps(): Serialize a Python object into a JSON string
-        lst = [json.dumps(obj.__dict__) for obj in lst]
+        # lst = [json.dumps(obj.__dict__) for obj in lst]
+        # for i in lst:
         fhand.write('[\n')
         for i in range(len(lst)):
             item = lst[i]
@@ -222,6 +241,7 @@ def read_json_file(file_name):
     try:
         fhand = open(get_full_path(file_name))
         data = fhand.read()
+        # print(len(data))
         if len(data) == 0:
             return None
     except FileNotFoundError:
@@ -234,3 +254,26 @@ def read_json_file(file_name):
         print(err)
         return None
     return result
+# # Read from a json file
+# def read_json_file(file_name):
+#     try:
+#         fhand = open(get_full_path(file_name))
+#         data = fhand.read()
+#     except FileNotFoundError:
+#         print(f'Can not open file {file_name}')
+#         exit()
+#     try:
+#         # Parse a JSON string into a Python object
+#         result = json.loads(data)
+#     except Exception as err:
+#         print(err)
+#         exit()
+#     return result
+
+
+def main():
+    pass
+
+
+if __name__ == '__main__':
+    main()
