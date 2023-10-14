@@ -63,7 +63,14 @@ def get_employee_id(emps):
             continue
         return id
 
-
+# # Get employee's id from user input
+# def get_employee_id(emp_ids):
+#     while True:
+#         id = get_string('Nhập mã số: ')
+#         if id.lower() in emp_ids:
+#             print('Mã nhân viên đã tồn tại')
+#             continue
+#         return id
 
 
 # Get department's id from user input
@@ -161,39 +168,13 @@ def add_employee(depts, emps):
     return True
 
 
-# Delete employee
-def delete_employee(emps):
-    ids = [e.id.lower() for e in emps]
-    id = get_string('Nhập mã nhân viên muốn xóa: ')
-    id = id.lower()
-    if id not in ids:
-        print('\nMã nhân viên không tồn tại')
-        return False
-    pos = ids.index(id)
-    emps.pop(pos)
-    print('\nĐã xóa thành công')
-    return True
-
-# Delete department
-def delete_department(depts, emps):
-    dept_ids_in_emps = [e.department.lower() for e in emps]
-    ids = [dept.id.lower() for dept in depts]
-    id = get_string('Nhập mã bộ phận muốn xóa: ')
-    id = id.lower()
-    if id not in ids:
-        print('\nMã bộ phận không tồn tại')
-        return False
-    if id in dept_ids_in_emps:
-        print('\nBạn không thể xóa bộ phận đang có nhân viên')
-        return False
-    pos = ids.index(id)
-    depts.pop(pos)
-    print('\nĐã xóa thành công')
-    return True
-
-
 def main():
     pass
+    # depts, emps = fetch_departments_and_employees('test.json')
+    # add_employee(depts, emps)
+
+    # display_ids(depts, '====== DEPARTMENT IDS =====')
+    # display_ids(emps, '====== EMPLOYEE IDS =====')
 
 
 if __name__ == '__main__':

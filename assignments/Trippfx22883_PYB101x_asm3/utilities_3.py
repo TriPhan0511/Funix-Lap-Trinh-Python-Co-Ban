@@ -131,10 +131,6 @@ def display_ids(lst, msg='=========================='):
 
 # Add a new employee
 def add_employee(depts, emps):
-    # # test
-    # display_ids(depts, '====== DEPARTMENT IDS =====')
-    # display_ids(emps, '====== EMPLOYEE IDS =====')
-
     print('Thêm nhân viên mới ...')
     id = get_employee_id(emps)
     dept_id = get_string('Nhập mã bộ phận: ')
