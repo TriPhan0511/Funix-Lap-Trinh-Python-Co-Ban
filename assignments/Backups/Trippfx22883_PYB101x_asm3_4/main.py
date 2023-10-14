@@ -3,7 +3,6 @@ from employee import Employee
 from manager import Manager
 from utilities import format_currency,  write_data_to_file, display_list
 from utilities_2 import fetch_departments_and_employees
-from utilities_3 import add_employee
 
 JSON_FILE_NAME = 'sample.json'
 
@@ -35,6 +34,15 @@ def get_input():
             print('\nNhập sai.\nVui lòng nhập một số từ 1 đến 7 để lựa chọn menu!')
             continue
         return inp
+
+
+# # Display departments or employees
+# def display_list(lst, msg='===== Display list =====', empty_msg='Empty list'):
+#     print(msg)
+#     if len(lst) == 0:
+#         print(empty_msg)
+#     for item in lst:
+#         print(f'{item}\n')
 
 
 # Display id and salary of an employee
@@ -69,27 +77,26 @@ def quit_program(departments, employees, success_msg, error_msg):
 
 
 def main():
-    depts, emps = fetch_departments_and_employees(JSON_FILE_NAME)
+    departments, employees = fetch_departments_and_employees(JSON_FILE_NAME)
     while True:
         inp = get_input()
         if inp == 1:
             display_list(
-                emps, '\n********** Danh sách nhân viên **********\n', 'Danh sách chưa có nhân viên nào.')
+                employees, '\n********** Danh sách nhân viên **********\n', 'Danh sách chưa có nhân viên nào.')
         if inp == 2:
             display_list(
-                depts, '\n********** Danh sách bộ phận **********\n', 'Danh sách chưa có bộ phận nào.')
+                departments, '\n********** Danh sách bộ phận **********\n', 'Danh sách chưa có bộ phận nào.')
         if inp == 3:
-            print('\n********** Thêm nhân viên mới **********\n')
-            add_employee(depts, emps)
+            print('Thêm nhân viên mới.')
         if inp == 4:
             print('Xóa nhân viên theo ID')
         if inp == 5:
             print('Xóa bộ phận theo ID.')
         if inp == 6:
             display_salaries_table(
-                emps, depts, '\n********** Hiển thị bảng lương **********\n')
+                employees, departments, '\n********** Hiển thị bảng lương **********\n')
         if inp == 7:
-            quit_program(depts, emps,
+            quit_program(departments, employees,
                          f'\nĐã lưu dữ liệu vào file "{JSON_FILE_NAME}".', '\nĐã có lỗi xảy ra trong quá trình lưu dữ liệu.')
 
 

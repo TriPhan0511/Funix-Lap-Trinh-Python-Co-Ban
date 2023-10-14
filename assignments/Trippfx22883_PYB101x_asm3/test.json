@@ -1,32 +1,13 @@
 {
-  "departments": [
-    { "id": "ACCOUNTING", "bonus_salary": 450000 },
-    { "id": "MARKETING", "bonus_salary": 1000000 },
-    { "id": "IT", "bonus_salary": 650000 },
-    { "id": "SALE001", "bonus_salary": 500000 },
-    { "id": "SALE002", "bonus_salary": 550000 }
-  ],
-  "employees": [
-    {
-      "id": "NV001",
-      "name": "John Doe",
-      "salary_base": 200000,
-      "working_days": 26,
-      "department": "ACCOUNTING",
-      "working_performance": 1,
-      "bonus": 500000,
-      "late_comming_days": 0
-    },
-    {
-      "id": "NV006",
-      "name": "L\u00ea Th\u1ecb H\u1ed3ng",
-      "salary_base": 200000,
-      "working_days": 26,
-      "department": "SALE02",
-      "working_performance": 1,
-      "bonus": 500000,
-      "late_comming_days": 0,
-      "is_manager": true
-    }
-  ]
+	"departments": [
+		{"id": "ACCOUNTING", "bonus_salary": 450000},
+		{"id": "MARKETING", "bonus_salary": 1000000},
+		{"id": "IT", "bonus_salary": 650000},
+		{"id": "SALE001", "bonus_salary": 500000},
+		{"id": "SALE002", "bonus_salary": 550000}
+	],
+	"employees": [
+		{"id": "NV001", "name": "John Doe", "salary_base": 200000, "working_days": 26, "department": "ACCOUNTING", "working_performance": 1, "bonus": 500000, "late_comming_days": 0},
+		{"id": "NV002", "name": "L\u00ea Th\u1ecb H\u1ed3ng", "salary_base": 200000, "working_days": 26, "department": "SALE002", "working_performance": 1, "bonus": 500000, "late_comming_days": 0, "is_manager": true}
+	]
 }

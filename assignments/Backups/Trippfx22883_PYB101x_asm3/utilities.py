@@ -243,5 +243,5 @@ def display_list(lst, msg='===== Display list =====', empty_msg='Empty list'):
     if len(lst) == 0:
         print(empty_msg)
     for item in lst:
-        print(type(item)) # Test
-        print(f'{item}\n')
+        # print(f'{item}\n')
+        print(f'{item}')
