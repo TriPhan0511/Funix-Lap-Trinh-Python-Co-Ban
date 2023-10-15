@@ -5,7 +5,7 @@ from utilities_2 import fetch_departments_and_employees
 from utilities import display_list
 
 
-def get_string(msg, error_msg='Bạn không được bỏ trống thông tin này', allow_empty=False):
+def get_string(msg='Nhập dữ liệu', error_msg='Bạn không được bỏ trống thông tin này', allow_empty=False):
     '''Get a string from user input.'''
     while True:
         inp = input(msg)
@@ -16,7 +16,6 @@ def get_string(msg, error_msg='Bạn không được bỏ trống thông tin nà
             print(error_msg)
             continue
         return inp
-
 
 
 # def get_string(msg, error_msg='Bạn không được bỏ trống thông tin này'):
@@ -142,7 +141,8 @@ def is_dept_id_exist(id, depts):
 # Get employee's position from user input
 def get_position(allow_empty=False):
     while True:
-        position = get_string('Nhập chức vụ (NV / QL): ', allow_empty=allow_empty)
+        position = get_string('Nhập chức vụ (NV / QL): ',
+                              allow_empty=allow_empty)
         if len(position) == 0:
             return 0
         position = position.upper()
@@ -176,14 +176,13 @@ def get_name(msg='Nhập họ và tên: ', allow_empty=False):
 #     return get_string(msg='Nhập họ và tên: ', allow_empty=allow_empty)
 
 
-
 # # Get employee's name from user input
 # def get_name():
 #     return get_string('Nhập họ và tên: ')
 
 
 # Get number of days from user input
-def get_days(msg='Nhập số ngày: ', total_days_in_month=31, allow_empty=False, err_msg = 'Có lỗi!'):
+def get_days(msg='Nhập số ngày: ', total_days_in_month=31, allow_empty=False, err_msg='Có lỗi!'):
     while True:
         days = get_int(msg, err_msg_1=err_msg, allow_empty=allow_empty)
         if days == None:
@@ -193,7 +192,6 @@ def get_days(msg='Nhập số ngày: ', total_days_in_month=31, allow_empty=Fals
                 f'Nhập sai. Vui lòng nhập một số nguyên từ 0 đến {total_days_in_month}.')
             continue
         return days
-
 
 
 # # Get number of days from user input
@@ -222,7 +220,7 @@ def add_employee(depts, emps):
     name = get_name()
     # todo
     # Change from get_float to get_int
-    salary_base = get_float('Nhập hệ số lương: ') 
+    salary_base = get_float('Nhập hệ số lương: ')
     working_days = get_days('Nhập số ngày làm việc: ')
     working_performance = get_float('Nhập hệ số hiệu quả: ')
     bonus = get_int('Nhập thưởng: ')
@@ -257,6 +255,8 @@ def delete_employee(emps):
     return True
 
 # Delete department
+
+
 def delete_department(depts, emps):
     dept_ids_in_emps = [e.department.lower() for e in emps]
     ids = [dept.id.lower() for dept in depts]
@@ -274,16 +274,14 @@ def delete_department(depts, emps):
     return True
 
 
-
-def get_emp_id_for_editing(emps):
+def get_emp_id_for_editing(emps, msg='Nhập mã nhân viên: ', not_exist_id_msg='ID này không tồn tại'):
     ids = [emp.id.lower() for emp in emps]
     while True:
-        id = get_string('Nhập mã số: ')
+        id = get_string(msg)
         if id.lower() not in ids:
-            print('Nhân viên không tồn tại')
-            return (None,None)
+            print(not_exist_id_msg)
+            return (None, None)
         return (id, ids.index(id.lower()))
-
 
 
 # def get_emp_id_for_editing(emps):
@@ -296,56 +294,57 @@ def get_emp_id_for_editing(emps):
 #         return (id, ids.index(id.lower()))
 
 
-
 def edit_employee(emps, msg='Edit Employee'):
-    # # test
-    # for e in emps:
-    #     print(e)
-    # print('--------------------------')
-
     print(msg)
     print('Chỉnh sửa nhân viên')
     err_msg = 'Bạn cần nhập đúng định dạng'
-    id, pos = get_emp_id_for_editing(emps)
+    id, pos = get_emp_id_for_editing(
+        emps, not_exist_id_msg='\nNhân viên không tồn tại')
     if id == None:
         return False
     emp = emps[pos]
     name = get_name(msg='\nNhập họ và tên: ', allow_empty=True)
     if len(name) == 0:
         name = emp.name
-    position = get_position(allow_empty=True) # 0: No edit, 1: Employee, 2: Manager
-    salary_base = get_int(msg='Nhập hệ số lương: ', err_msg_1=err_msg, allow_empty=True)
+    # 0: No edit, 1: Employee, 2: Manager
+    position = get_position(allow_empty=True)
+    salary_base = get_int(msg='Nhập hệ số lương: ',
+                          err_msg_1=err_msg, allow_empty=True)
     if salary_base == None:
         salary_base = emp.salary_base
-    working_days = get_days(msg='Nhập số ngày làm việc: ', allow_empty=True, err_msg=err_msg)
+    working_days = get_days(msg='Nhập số ngày làm việc: ',
+                            allow_empty=True, err_msg=err_msg)
     if working_days == None:
         working_days = emp.working_days
-    working_performance = get_float(msg='Nhập hệ số hiệu quả: ', err_msg_1=err_msg, allow_empty=True)
+    working_performance = get_float(
+        msg='Nhập hệ số hiệu quả: ', err_msg_1=err_msg, allow_empty=True)
     if working_performance == None:
         working_performance = emp.working_performance
     bonus = get_int(msg='Nhập thưởng: ', err_msg_1=err_msg, allow_empty=True)
     if bonus == None:
         bonus = emp.bonus
-    late_comming_days = get_days(msg='Nhập số ngày đi muộn: ', allow_empty=True, err_msg=err_msg)
+    late_comming_days = get_days(
+        msg='Nhập số ngày đi muộn: ', allow_empty=True, err_msg=err_msg)
     if late_comming_days == None:
         late_comming_days = emp.late_comming_days
 
     is_manager = isinstance(emp, Manager)
     if position == 1 or (position == 0 and not is_manager):
-        emps[pos] = Employee(id, name, salary_base, working_days, emp.department, working_performance, bonus, late_comming_days)        
+        emps[pos] = Employee(id, name, salary_base, working_days,
+                             emp.department, working_performance, bonus, late_comming_days)
     elif position == 2 or (position == 0 and is_manager):
-        emps[pos] = Manager(id, name, salary_base, working_days, emp.department, working_performance, bonus, late_comming_days)        
+        emps[pos] = Manager(id, name, salary_base, working_days,
+                            emp.department, working_performance, bonus, late_comming_days)
 
     print('\nĐã hoàn tất chỉnh sửa')
     return True
-
 
     # # test
     # print('--------------------------')
     # for e in emps:
     #     print(e)
 
-    # # test        
+    # # test
     # print(f'id:{id}')
     # print(f'name:{name}')
     # print(f'position:{position}')
@@ -355,12 +354,9 @@ def edit_employee(emps, msg='Edit Employee'):
     # print(f'bonus:{bonus}')
     # print(f'late_comming_days:{late_comming_days}')
 
-    
-
-
 
 def main():
-    _, emps =  fetch_departments_and_employees('test.json')
+    _, emps = fetch_departments_and_employees('test.json')
     edit_employee(emps)
 
 
