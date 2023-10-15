@@ -149,9 +149,9 @@ def get_position(allow_empty=False):
         if position not in ['NV', 'QL']:
             print('Nhập sai.\nNhập "QL" nếu là Quản Lý hoặc nhập "NV" nếu là Nhân Viên.')
             continue
-        if position == 'QL':
-            return 2
-        return 1
+        if position == 'NV':
+            return 1
+        return 2
 
 
 # Get employee's position from user input
@@ -337,12 +337,18 @@ def edit_employee(emps):
     if late_comming_days == None:
         late_comming_days = emp.late_comming_days
 
-    emps[pos] = Employee(id, name, salary_base, working_days, emp.department, working_performance, bonus, late_comming_days)        
+    is_manager = isinstance(emp, Manager)
+    if position == 1 or (position == 0 and not is_manager):
+        emps[pos] = Employee(id, name, salary_base, working_days, emp.department, working_performance, bonus, late_comming_days)        
+    elif position == 2 or (position == 0 and is_manager):
+        emps[pos] = Manager(id, name, salary_base, working_days, emp.department, working_performance, bonus, late_comming_days)        
 
-    # test
-    print('--------------------------')
-    for e in emps:
-        print(e)
+
+
+    # # test
+    # print('--------------------------')
+    # for e in emps:
+    #     print(e)
 
     # # test        
     # print(f'id:{id}')
@@ -355,32 +361,6 @@ def edit_employee(emps):
     # print(f'late_comming_days:{late_comming_days}')
 
     
-
-# def add_employee_0(depts, emps):
-#     print('Thêm nhân viên mới ...')
-#     id = get_employee_id(emps)
-#     dept_id = get_string('Nhập mã bộ phận: ')
-    # manager = is_manager()
-#     name = get_name()
-#     salary_base = get_float('Nhập hệ số lương: ')
-#     working_days = get_days('Nhập số ngày làm việc: ')
-#     working_performance = get_float('Nhập hệ số hiệu quả: ')
-#     bonus = get_int('Nhập thưởng: ')
-#     late_comming_days = get_days('Nhập số ngày đi muộn: ')
-
-#     if is_dept_id_exist(dept_id, depts):
-#         print('Đã tạo bộ phận mới ...')
-
-#     if manager:
-#         emp = Manager(id, name, salary_base, working_days, dept_id,
-#                       working_performance, bonus, late_comming_days)
-#     else:
-#         emp = Employee(id, name, salary_base, working_days, dept_id,
-#                        working_performance, bonus, late_comming_days)
-#     emps.append(emp)
-
-#     print('Đã thêm nhân viên mới ...')
-#     return True    
 
 
 

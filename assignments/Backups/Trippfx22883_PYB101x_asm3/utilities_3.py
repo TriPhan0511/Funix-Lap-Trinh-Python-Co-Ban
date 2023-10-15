@@ -5,23 +5,39 @@ from utilities_2 import fetch_departments_and_employees
 from utilities import display_list
 
 
-def get_string(msg, error_msg='Bạn không được bỏ trống thông tin này'):
+def get_string(msg, error_msg='Bạn không được bỏ trống thông tin này', allow_empty=False):
     '''Get a string from user input.'''
     while True:
         inp = input(msg)
         inp = inp.strip()
+        if allow_empty:
+            return inp
         if len(inp) == 0:
             print(error_msg)
             continue
         return inp
 
 
-def get_float(msg='Nhập vào một số: ', err_msg_1='Nhập sai. Vui lòng nhập vào một số.', err_msg_2='Bạn phải nhập một số không âm'):
+
+# def get_string(msg, error_msg='Bạn không được bỏ trống thông tin này'):
+#     '''Get a string from user input.'''
+#     while True:
+#         inp = input(msg)
+#         inp = inp.strip()
+#         if len(inp) == 0:
+#             print(error_msg)
+#             continue
+#         return inp
+
+
+def get_float(msg='Nhập vào một số: ', err_msg_1='Nhập sai. Vui lòng nhập vào một số.', err_msg_2='Bạn phải nhập một số không âm', allow_empty=False):
     '''Get a floating-point number from user input.'''
     while True:
-        float_number = get_string(msg)
+        inp = get_string(msg, allow_empty=allow_empty)
+        if len(inp) == 0:
+            return None
         try:
-            float_number = float(float_number)
+            float_number = float(inp)
         except ValueError:
             print(err_msg_1)
             continue
@@ -31,12 +47,28 @@ def get_float(msg='Nhập vào một số: ', err_msg_1='Nhập sai. Vui lòng n
         return float_number
 
 
-def get_int(msg='Nhập vào một số nguyên: ', err_msg_1='Nhập sai. Vui lòng nhập vào một số nguyên.', err_msg_2='Bạn phải nhập một số không âm'):
+# def get_float(msg='Nhập vào một số: ', err_msg_1='Nhập sai. Vui lòng nhập vào một số.', err_msg_2='Bạn phải nhập một số không âm'):
+#     '''Get a floating-point number from user input.'''
+#     while True:
+#         float_number = get_string(msg)
+#         try:
+#             float_number = float(float_number)
+#         except ValueError:
+#             print(err_msg_1)
+#             continue
+#         if float_number <= 0:
+#             print(err_msg_2)
+#             continue
+#         return float_number
+
+def get_int(msg='Nhập vào một số nguyên: ', err_msg_1='Nhập sai. Vui lòng nhập vào một số nguyên.', err_msg_2='Bạn phải nhập một số không âm', allow_empty=False):
     '''Get an integer number from user input.'''
     while True:
-        int_number = get_string(msg)
+        inp = get_string(msg, allow_empty=allow_empty)
+        if len(inp) == 0:
+            return None
         try:
-            int_number = int(int_number)
+            int_number = int(inp)
         except ValueError:
             print(err_msg_1)
             continue
@@ -44,6 +76,21 @@ def get_int(msg='Nhập vào một số nguyên: ', err_msg_1='Nhập sai. Vui l
             print(err_msg_2)
             continue
         return int_number
+
+
+# def get_int(msg='Nhập vào một số nguyên: ', err_msg_1='Nhập sai. Vui lòng nhập vào một số nguyên.', err_msg_2='Bạn phải nhập một số không âm'):
+#     '''Get an integer number from user input.'''
+#     while True:
+#         int_number = get_string(msg)
+#         try:
+#             int_number = int(int_number)
+#         except ValueError:
+#             print(err_msg_1)
+#             continue
+#         if int_number < 0:
+#             print(err_msg_2)
+#             continue
+#         return int_number
 
 
 # todo
@@ -62,8 +109,6 @@ def get_employee_id(emps):
             print('Mã nhân viên đã tồn tại')
             continue
         return id
-
-
 
 
 # Get department's id from user input
@@ -95,6 +140,21 @@ def is_dept_id_exist(id, depts):
 
 
 # Get employee's position from user input
+def get_position(allow_empty=False):
+    while True:
+        position = get_string('Nhập chức vụ (NV / QL): ', allow_empty=allow_empty)
+        if len(position) == 0:
+            return 0
+        position = position.upper()
+        if position not in ['NV', 'QL']:
+            print('Nhập sai.\nNhập "QL" nếu là Quản Lý hoặc nhập "NV" nếu là Nhân Viên.')
+            continue
+        if position == 'NV':
+            return 1
+        return 2
+
+
+# Get employee's position from user input
 def is_manager():
     while True:
         position = get_string('Nhập chức vụ (NV / QL): ')
@@ -108,19 +168,39 @@ def is_manager():
 
 
 # Get employee's name from user input
-def get_name():
-    return get_string('Nhập họ và tên: ')
+def get_name(allow_empty=False):
+    return get_string(msg='Nhập họ và tên: ', allow_empty=allow_empty)
+
+
+
+# # Get employee's name from user input
+# def get_name():
+#     return get_string('Nhập họ và tên: ')
 
 
 # Get number of days from user input
-def get_days(msg='Nhập số ngày: ', total_days_in_month=31):
+def get_days(msg='Nhập số ngày: ', total_days_in_month=31, allow_empty=False, err_msg = 'Có lỗi!'):
     while True:
-        days = get_int(msg)
+        days = get_int(msg, err_msg_1=err_msg, allow_empty=allow_empty)
+        if days == None:
+            return None
         if days < 0 or days > total_days_in_month:
             print(
                 f'Nhập sai. Vui lòng nhập một số nguyên từ 0 đến {total_days_in_month}.')
             continue
         return days
+
+
+
+# # Get number of days from user input
+# def get_days(msg='Nhập số ngày: ', total_days_in_month=31):
+#     while True:
+#         days = get_int(msg)
+#         if days < 0 or days > total_days_in_month:
+#             print(
+#                 f'Nhập sai. Vui lòng nhập một số nguyên từ 0 đến {total_days_in_month}.')
+#             continue
+#         return days
 
 
 # Display ids
@@ -131,16 +211,14 @@ def display_ids(lst, msg='=========================='):
 
 # Add a new employee
 def add_employee(depts, emps):
-    # # test
-    # display_ids(depts, '====== DEPARTMENT IDS =====')
-    # display_ids(emps, '====== EMPLOYEE IDS =====')
-
     print('Thêm nhân viên mới ...')
     id = get_employee_id(emps)
     dept_id = get_string('Nhập mã bộ phận: ')
     manager = is_manager()
     name = get_name()
-    salary_base = get_float('Nhập hệ số lương: ')
+    # todo
+    # Change from get_float to get_int
+    salary_base = get_float('Nhập hệ số lương: ') 
     working_days = get_days('Nhập số ngày làm việc: ')
     working_performance = get_float('Nhập hệ số hiệu quả: ')
     bonus = get_int('Nhập thưởng: ')
@@ -192,8 +270,103 @@ def delete_department(depts, emps):
     return True
 
 
+
+def get_emp_id_for_editing(emps):
+    ids = [emp.id.lower() for emp in emps]
+    while True:
+        id = get_string('Nhập mã số: ')
+        if id.lower() not in ids:
+            print('Nhân viên không tồn tại')
+            return (None,None)
+        return (id, ids.index(id.lower()))
+
+
+
+# def get_emp_id_for_editing(emps):
+#     ids = [emp.id.lower() for emp in emps]
+#     while True:
+#         id = get_string('Nhập mã số: ', allow_empty=True)
+#         if id.lower() not in ids:
+#             print('Nhân viên không tồn tại')
+#             return (None,None)
+#         return (id, ids.index(id.lower()))
+
+
+# Chỉnh sửa nhân viên
+# Nhập mã nhân viên: 'NV002'
+
+# Nhập họ và tên: ...
+# Nhập chức vụ (NV / QL): ...
+# Nhập hệ số lương: ...
+# Nhập số ngày làm việc: ...
+# Nhập hệ số hiệu quả: ...
+# Nhập thưởng: ...
+# Nhập số ngày đi muộn: ...
+
+# Đã hoàn tất chỉnh sửa
+# Edit employee
+def edit_employee(emps):
+     # test
+    for e in emps:
+        print(e)
+    print('--------------------------')
+    print('Chỉnh sửa nhân viên')
+    err_msg = 'Bạn cần nhập đúng định dạng'
+    id, pos = get_emp_id_for_editing(emps)
+    if id == None:
+        return False
+    emp = emps[pos]
+    # print(emp)
+    name = get_name(allow_empty=True)
+    if len(name) == 0:
+        name = emp.name
+    position = get_position(allow_empty=True) # 0: No edit, 1: Employee, 2: Manager
+    salary_base = get_int(msg='Nhập hệ số lương: ', err_msg_1=err_msg, allow_empty=True)
+    if salary_base == None:
+        salary_base = emp.salary_base
+    working_days = get_days(msg='Nhập số ngày làm việc: ', allow_empty=True, err_msg=err_msg)
+    if working_days == None:
+        working_days = emp.working_days
+    working_performance = get_float(msg='Nhập hệ số hiệu quả: ', err_msg_1=err_msg, allow_empty=True)
+    if working_performance == None:
+        working_performance = emp.working_performance
+    bonus = get_int(msg='Nhập thưởng: ', err_msg_1=err_msg, allow_empty=True)
+    if bonus == None:
+        bonus = emp.bonus
+    late_comming_days = get_days(msg='Nhập số ngày đi muộn: ', allow_empty=True, err_msg=err_msg)
+    if late_comming_days == None:
+        late_comming_days = emp.late_comming_days
+
+    is_manager = isinstance(emp, Manager)
+    if position == 1 or (position == 0 and not is_manager):
+        emps[pos] = Employee(id, name, salary_base, working_days, emp.department, working_performance, bonus, late_comming_days)        
+    elif position == 2 or (position == 0 and is_manager):
+        emps[pos] = Manager(id, name, salary_base, working_days, emp.department, working_performance, bonus, late_comming_days)        
+
+
+
+    # # test
+    # print('--------------------------')
+    # for e in emps:
+    #     print(e)
+
+    # # test        
+    # print(f'id:{id}')
+    # print(f'name:{name}')
+    # print(f'position:{position}')
+    # print(f'salary_base:{salary_base}')
+    # print(f'working_days:{working_days}')
+    # print(f'working_performance:{working_performance}')
+    # print(f'bonus:{bonus}')
+    # print(f'late_comming_days:{late_comming_days}')
+
+    
+
+
+
 def main():
-    pass
+    _, emps =  fetch_departments_and_employees('test.json')
+    edit_employee(emps)
 
 
 if __name__ == '__main__':
