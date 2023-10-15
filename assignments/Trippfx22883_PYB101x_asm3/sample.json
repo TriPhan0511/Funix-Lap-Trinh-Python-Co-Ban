@@ -1,8 +1,11 @@
 {
 	"departments": [
-		{"id": "SALE001", "bonus_salary": 500000}
+		{"id": "SALE001", "bonus_salary": 500000},
+		{"id": "SALE002", "bonus_salary": 550000}
 	],
 	"employees": [
-		{"id": "NV001", "name": "Nguy\u1ec5n V\u0103n A", "salary_base": 200000.0, "working_days": 26, "department": "SALE001", "working_performance": 1.0, "bonus": 500000, "late_comming_days": 2}
+		{"id": "NV001", "name": "Nguyen Van A", "salary_base": 200000.0, "working_days": 26, "department": "SALE001", "working_performance": 1.0, "bonus": 500000, "late_comming_days": 2},
+		{"id": "NV002", "name": "Le Thi B", "salary_base": 300000.0, "working_days": 18, "department": "SALE002", "working_performance": 1.5, "bonus": 250000, "late_comming_days": 3, "is_manager": true},
+		{"id": "NV003", "name": "John Doe", "salary_base": 2.0, "working_days": 26, "department": "SALE001", "working_performance": 2.0, "bonus": 650000, "late_comming_days": 0, "is_manager": true}
 	]
 }

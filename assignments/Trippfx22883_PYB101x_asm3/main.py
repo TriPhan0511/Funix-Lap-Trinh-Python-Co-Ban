@@ -27,6 +27,7 @@ def create_menu():
 # Get choice from user
 def get_input(start=1, end=8):
     err_msg = f'\nNhập sai.\nVui lòng nhập một số từ {start} đến {end} để lựa chọn menu!'
+        
     while True:
         try:
             inp = int(input(f'\n{create_menu()}'))
@@ -57,7 +58,8 @@ def get_input(start=1, end=8):
 # Thu nhập thực nhận: 4,961,880 (VND)
 def display_salary(emp, depts):
     out = f'Mã số: {emp.id}'
-    out += f'\nThu nhập thực nhận: {format_currency(emp.compute_salary(depts))}'
+    out += f'\nThu nhập thực nhận: {
+        format_currency(emp.compute_salary(depts))}'
     print(f'{out}\n')
 
 
@@ -113,7 +115,7 @@ def quit_program(departments, employees, success_msg, error_msg):
 def main():
     depts, emps = fetch_departments_and_employees(JSON_FILE_NAME)
     while True:
-        inp = get_input(1,8)
+        inp = get_input(1, 8)
         # inp = get_input()
         if inp == 1:
             display_list(
@@ -134,10 +136,11 @@ def main():
             display_salaries_table(
                 emps, depts, '\n********** Hiển thị bảng lương **********\n')
         if inp == 7:
-            edit_employee(emps, '\n********** Chỉnh sửa nhân viên **********\n')
+            edit_employee(
+                emps, '\n********** Chỉnh sửa nhân viên **********\n')
         if inp == 8:
             quit_program(depts, emps,
-                         f'\nĐã lưu dữ liệu vào file "{JSON_FILE_NAME}".', '\nĐã có lỗi xảy ra trong quá trình lưu dữ liệu.')
+                         f'\nĐã lưu dữ liệu vào file "{JSON_FILE_NAME}"\n.', '\nĐã có lỗi xảy ra trong quá trình lưu dữ liệu.\n')
 
 
 if __name__ == '__main__':
