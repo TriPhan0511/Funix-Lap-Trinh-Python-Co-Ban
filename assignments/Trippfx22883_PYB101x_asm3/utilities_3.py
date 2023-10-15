@@ -168,8 +168,12 @@ def is_manager():
 
 
 # Get employee's name from user input
-def get_name(allow_empty=False):
-    return get_string(msg='Nhập họ và tên: ', allow_empty=allow_empty)
+def get_name(msg='Nhập họ và tên: ', allow_empty=False):
+    return get_string(msg=msg, allow_empty=allow_empty)
+
+# # Get employee's name from user input
+# def get_name(allow_empty=False):
+#     return get_string(msg='Nhập họ và tên: ', allow_empty=allow_empty)
 
 
 
@@ -292,32 +296,21 @@ def get_emp_id_for_editing(emps):
 #         return (id, ids.index(id.lower()))
 
 
-# Chỉnh sửa nhân viên
-# Nhập mã nhân viên: 'NV002'
 
-# Nhập họ và tên: ...
-# Nhập chức vụ (NV / QL): ...
-# Nhập hệ số lương: ...
-# Nhập số ngày làm việc: ...
-# Nhập hệ số hiệu quả: ...
-# Nhập thưởng: ...
-# Nhập số ngày đi muộn: ...
+def edit_employee(emps, msg='Edit Employee'):
+    # # test
+    # for e in emps:
+    #     print(e)
+    # print('--------------------------')
 
-# Đã hoàn tất chỉnh sửa
-# Edit employee
-def edit_employee(emps):
-     # test
-    for e in emps:
-        print(e)
-    print('--------------------------')
+    print(msg)
     print('Chỉnh sửa nhân viên')
     err_msg = 'Bạn cần nhập đúng định dạng'
     id, pos = get_emp_id_for_editing(emps)
     if id == None:
         return False
     emp = emps[pos]
-    # print(emp)
-    name = get_name(allow_empty=True)
+    name = get_name(msg='\nNhập họ và tên: ', allow_empty=True)
     if len(name) == 0:
         name = emp.name
     position = get_position(allow_empty=True) # 0: No edit, 1: Employee, 2: Manager
@@ -343,6 +336,8 @@ def edit_employee(emps):
     elif position == 2 or (position == 0 and is_manager):
         emps[pos] = Manager(id, name, salary_base, working_days, emp.department, working_performance, bonus, late_comming_days)        
 
+    print('\nĐã hoàn tất chỉnh sửa')
+    return True
 
 
     # # test

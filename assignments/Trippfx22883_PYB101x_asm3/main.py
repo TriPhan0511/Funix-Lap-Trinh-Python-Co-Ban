@@ -17,7 +17,8 @@ def create_menu():
         '4. Xóa nhân viên theo ID.',
         '5. Xóa bộ phận theo ID.',
         '6. Hiển thị bảng lương.',
-        '7. Thoát.',
+        '7. Chỉnh sửa nhân viên.',
+        '8. Thoát.',
         '\nMời bạn nhập chức năng mong muốn: '
     ]
     return ('\n'.join(items))
@@ -133,7 +134,7 @@ def main():
             display_salaries_table(
                 emps, depts, '\n********** Hiển thị bảng lương **********\n')
         if inp == 7:
-            edit_employee(emps)
+            edit_employee(emps, '\n********** Chỉnh sửa nhân viên **********\n')
         if inp == 8:
             quit_program(depts, emps,
                          f'\nĐã lưu dữ liệu vào file "{JSON_FILE_NAME}".', '\nĐã có lỗi xảy ra trong quá trình lưu dữ liệu.')

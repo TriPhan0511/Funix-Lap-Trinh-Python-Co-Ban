@@ -10,6 +10,6 @@
 	"employees": [
 		{"id": "NV001", "name": "John Doe", "salary_base": 200000, "working_days": 26, "department": "ACCOUNTING", "working_performance": 1, "bonus": 500000, "late_comming_days": 0},
 		{"id": "NV006", "name": "L\u00ea Th\u1ecb H\u1ed3ng", "salary_base": 200000, "working_days": 26, "department": "SALE002", "working_performance": 1, "bonus": 500000, "late_comming_days": 0, "is_manager": true},
-		{"id": "123", "name": "KEVIN", "salary_base": 1.0, "working_days": 1, "department": "123", "working_performance": 1.0, "bonus": 1, "late_comming_days": 1, "is_manager": true}
+		{"id": "123", "name": "L\u00ea V\u0103n T\u00e1m", "salary_base": 250000, "working_days": 20, "department": "123", "working_performance": 1.5, "bonus": 1, "late_comming_days": 5, "is_manager": true}
 	]
 }
