@@ -9,6 +9,6 @@ class Department:
         self.bonus_salary = bonus_salary
 
     def __str__(self) -> str:
-        out = f'Mã bộ phận: {self.id}'
+        out = f'Mã bộ phận: {self.id.upper()}'
         out += f'\nThưởng bộ phận: {format_currency(self.bonus_salary)}'
         return out

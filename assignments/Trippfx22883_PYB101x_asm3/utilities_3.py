@@ -8,7 +8,6 @@ from utilities import display_list
 # ERR_EMPTY_MSG = 'Bạn không được bỏ trống thông tin này'
 # ERR_NOT_AN_INTEGER_MSG = 'Bạn phải nhập vào một số nguyên.'
 # ERR_NOT_A_NUMBER_MSG = 'Bạn phải nhập vào một số.'
-# ERR_LESS_THAN_OR_EQUAL_TO_ZERO_MSG = 'Bạn phải nhập một số lớn hơn hoặc bằng 0'
 # ERR_LESS_THAN_ZERO_MSG = 'Bạn phải nhập một số không âm'
 # ERR_GREATER_THAN_TOTAL_DAYS_IN_MONTH_MSG='Bạn phải nhập một số nguyên nhỏ hơn hoặc bằng 31.' # Mặc định là một tháng có 31 ngày
 
@@ -19,22 +18,19 @@ from utilities import display_list
 # # ERR_LESS_THAN_ZERO_MSG = 'You must enter a number which is greater than or equal to zero.'
 
 
-def get_string(msg='Nhập dữ liệu: ', err_empty_msg='Bạn không được bỏ trống thông tin này', allow_empty=False):
+def get_string(msg='Nhập dữ liệu: ', allow_empty=False):
     while True:
         inp = input(msg)
         inp = inp.strip()
         if allow_empty:
             return inp
         if len(inp) == 0:
-            print(err_empty_msg)
+            print('Bạn không được bỏ trống thông tin này')
             continue
         return inp
     
 # Bonus should be an integer and greater than or equal to zero
-def get_bonus(msg='Nhập thưởng: ', 
-              err_not_an_integer_msg='Bạn phải nhập vào một số nguyên.',  
-              err_less_than_zero_msg='Bạn phải nhập một số lớn hơn hoặc bằng 0',
-              allow_empty=False):
+def get_bonus(msg='Nhập thưởng: ', allow_empty=False):
     while True:
         inp = get_string(msg, allow_empty=allow_empty)
         if len(inp) == 0:
@@ -42,10 +38,10 @@ def get_bonus(msg='Nhập thưởng: ',
         try:
             int_number = int(inp)
         except ValueError:
-            print(err_not_an_integer_msg)
+            print('Bạn phải nhập vào một số nguyên.')
             continue
         if int_number < 0:
-            print(err_less_than_zero_msg)
+            print('Bạn phải nhập một số không âm')
             continue
         return int_number     
 
@@ -57,27 +53,27 @@ def create_a_new_department(id):
 
 # Get employee's id from user input
 # def get_employee_id(emps, msg='Enter an ID: ', err_msg = 'This ID was taken.\nPlease enter another.'):
-def get_employee_id(emps, msg='Nhập mã số: ', err_msg = 'Mã nhân viên đã tồn tại'):
+def get_employee_id(emps, msg='Nhập mã số: '):
     ids = [emp.id.lower() for emp in emps]
     while True:
         id = get_string(msg=msg)
         if id.lower() in ids:
-            print(err_msg)
+            print('Mã nhân viên đã tồn tại')
             continue
         return id
 
 
-# Get department's id from user input
-def get_department_id(dept_ids, depts):
-    depts_2 = depts[:]  # copy list
-    while True:
-        dept_id = get_string('Nhập mã bộ phận: ')
-        if dept_id.lower() not in dept_ids:
-            print('Mã bộ phận chưa tồn tại, tạo mới ...')
-            dept = create_a_new_department(dept_id)
-            if isinstance(dept, Department):
-                depts_2.append(dept)
-        return (dept_id, depts_2)
+# # Get department's id from user input
+# def get_department_id(dept_ids, depts, msg='Nhập mã bộ phận: '):
+#     depts_2 = depts[:]  # copy list
+#     while True:
+#         dept_id = get_string(msg=msg)
+#         if dept_id.lower() not in dept_ids:
+#             print('Mã bộ phận chưa tồn tại, tạo mới ...')
+#             dept = create_a_new_department(dept_id)
+#             if isinstance(dept, Department):
+#                 depts_2.append(dept)
+#         return (dept_id, depts_2)
 
 
 # Check if an id exists in a list of department ids.
@@ -96,9 +92,9 @@ def create_new_dept_if_id_is_new(id, depts):
 
 
 # Get employee's position from user input
-def get_position(allow_empty=False):
+def get_position(msg='Nhập chức vụ (NV / QL): ', allow_empty=False):
     while True:
-        position = get_string('Nhập chức vụ (NV / QL): ', allow_empty=allow_empty)
+        position = get_string(msg=msg, allow_empty=allow_empty)
         if len(position) == 0:
             return 0
         position = position.upper()
@@ -111,13 +107,12 @@ def get_position(allow_empty=False):
 
 
 # Get employee's position from user input
-# def is_manager(msg='Nhập chức vụ (NV / QL): ', err_msg='You must enter "QL" if a manager or "NV" if an employee'):
-def is_manager(msg='Nhập chức vụ (NV / QL): ', err_msg='Nhập sai. Nhập "QL" nếu là Quản Lý hoặc nhập "NV" nếu là Nhân Viên.'):
+def is_manager(msg='Nhập chức vụ (NV / QL): '):
     while True:
         position = get_string(msg=msg)
         position = position.upper()
         if position not in ['NV', 'QL']:
-            print(err_msg)
+            print('Nhập sai. Nhập "QL" nếu là Quản Lý hoặc nhập "NV" nếu là Nhân Viên.')
             continue
         if position == 'QL':
             return True
@@ -149,12 +144,9 @@ def get_salary_base(msg='Nhập hệ số lương:  ', allow_empty=False):
 
 # Working days or late comming days should be an integer 
 # and the value is between 0 and days in month(example: 31)
-def get_days_2(msg='Enter a working days: ', 
-                    err_greater_than_total_days_in_month_msg='You must enter a number which is greater than or equal to zero and less than total days in month.',
-                    total_days_in_month=31, 
-                    allow_empty=False):
+def get_days_2(msg= 'Nhập số ngày:', total_days_in_month=31, allow_empty=False):
     while True:
-        inp = get_string(msg, allow_empty=allow_empty)
+        inp = get_string(msg=msg, allow_empty=allow_empty)
         if len(inp) == 0:
             return None
         try:
@@ -163,57 +155,43 @@ def get_days_2(msg='Enter a working days: ',
             print('Bạn phải nhập vào một số nguyên')
             continue
         if int_number < 0:
-            print('Bạn phải nhập một số lớn hơn hoặc bằng 0')
+            print('Bạn phải nhập một số không âm')
             continue
         if int_number > total_days_in_month:
-            print(err_greater_than_total_days_in_month_msg)
+            print(f'Bạn phải nhập một số nguyên nhỏ hơn hoặc bằng {total_days_in_month}.')
             continue
         return int_number
     
 
 # Working performance should be a number and greater than zero.
-def get_working_performance(msg='Enter working performance: ', 
-                    err_not_a_number_msg='You must enter a number.', 
-                    err_less_than_or_equal_to_zero_msg=ERR_LESS_THAN_OR_EQUAL_TO_ZERO_MSG,
-                    allow_empty=False):
+def get_working_performance(msg ='Nhập hệ số hiệu quả:', allow_empty=False):
     while True:
-        inp = get_string(msg, allow_empty=allow_empty)
+        inp = get_string(msg=msg, allow_empty=allow_empty)
         if len(inp) == 0:
             return None
         try:
             number = float(inp)
         except ValueError:
-            print(err_not_a_number_msg)
+            print('Bạn phải nhập vào một số.')
             continue
         if number <= 0:
-            print(err_less_than_or_equal_to_zero_msg)
+            print('Bạn phải nhập một số không âm')
             continue
         return number    
-    
-
    
 
 
 def add_employee(depts, emps):
     print('Thêm nhân viên mới ...')
-    id = get_employee_id(emps, msg='Nhập mã số: ', err_msg = 'Mã nhân viên đã tồn tại\nVui lòng nhập một mã số khác.')
+    id = get_employee_id(emps)
     dept_id = get_string(msg='Nhập mã bộ phận: ')
-    manager = is_manager(msg='Nhập chức vụ (NV / QL): ', err_msg='Bạn phải nhập "QL" nếu là Quản Lý hoặc nhập "NV" nếu là Nhân Viên.')
-    name = get_name(msg='Nhập họ và tên: ')    
-    salary_base = get_salary_base(msg='Nhập hệ số lương: ')                                  
-    working_days = get_days_2(msg='Nhập số ngày làm việc: ',                                     
-                                    err_less_than_zero_msg=ERR_LESS_THAN_OR_EQUAL_TO_ZERO_MSG,
-                                    err_greater_than_total_days_in_month_msg=ERR_GREATER_THAN_TOTAL_DAYS_IN_MONTH_MSG,
-                                    total_days_in_month=31)
-    working_performance = get_working_performance(msg='Nhập hệ số hiệu quả: ', 
-                                                  err_not_a_number_msg='Bạn phải nhập vào một số.',
-                                                  err_less_than_or_equal_to_zero_msg=ERR_LESS_THAN_OR_EQUAL_TO_ZERO_MSG)
-    bonus = get_bonus(msg='Nhập thưởng: ',                      
-                      err_less_than_zero_msg=ERR_LESS_THAN_OR_EQUAL_TO_ZERO_MSG)
-    late_comming_days = get_days_2(msg='Nhập số ngày đi muộn: ',                                     
-                                    err_less_than_zero_msg=ERR_LESS_THAN_OR_EQUAL_TO_ZERO_MSG,
-                                    err_greater_than_total_days_in_month_msg=ERR_GREATER_THAN_TOTAL_DAYS_IN_MONTH_MSG,
-                                    total_days_in_month=31)
+    manager = is_manager()
+    name = get_name()    
+    salary_base = get_salary_base()                                  
+    working_days = get_days_2(msg='Nhập số ngày làm việc: ')                                    
+    working_performance = get_working_performance()
+    bonus = get_bonus()
+    late_comming_days = get_days_2(msg='Nhập số ngày đi muộn: ')                                     
 
     if create_new_dept_if_id_is_new(dept_id, depts):
         print('Đã tạo bộ phận mới ...')
@@ -276,17 +254,17 @@ def add_employee(depts, emps):
 #     return True
 
 
-# def delete_employee(emps):
-#     ids = [e.id.lower() for e in emps]
-#     id = get_string('Nhập mã nhân viên muốn xóa: ')
-#     id = id.lower()
-#     if id not in ids:
-#         print('\nMã nhân viên không tồn tại')
-#         return False
-#     pos = ids.index(id)
-#     emps.pop(pos)
-#     print('\nĐã xóa thành công')
-#     return True
+def delete_employee(emps):
+    ids = [e.id.lower() for e in emps]
+    id = get_string('Nhập mã nhân viên muốn xóa: ')
+    id = id.lower()
+    if id not in ids:
+        print('\nMã nhân viên không tồn tại')
+        return False
+    pos = ids.index(id)
+    emps.pop(pos)
+    print('\nĐã xóa thành công')
+    return True
 
 
 # def delete_department(depts, emps):

@@ -35,8 +35,8 @@ class Employee:
     # Thưởng: 500,000 (VND)
     # Số ngày đi muộn: 2
     def __str__(self):
-        out = f'Mã số: {self.id}'
-        out += f'\nMã bộ phận: {self.department}'
+        out = f'Mã số: {self.id.upper()}'
+        out += f'\nMã bộ phận: {self.department.upper()}'
         out += f'\nChức vụ: Nhân viên'  # to_do
         out += f'\nHọ và tên: {self.name}'
         out += f'\nHệ số lương: {format_currency(self.salary_base)}'

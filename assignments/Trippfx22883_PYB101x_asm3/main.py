@@ -3,7 +3,7 @@ from employee import Employee
 from manager import Manager
 from utilities import format_currency,  write_data_to_file, display_list
 from utilities_2 import fetch_departments_and_employees
-from utilities_3 import add_employee
+from utilities_3 import add_employee, delete_employee
 
 JSON_FILE_NAME = 'sample.json'
 
@@ -85,9 +85,9 @@ def main():
         if inp == 3:
             print('\n********** Thêm nhân viên mới **********\n')
             add_employee(depts, emps)
-        # if inp == 4:
-        #     print('\n********** Xóa nhân viên theo ID **********\n')
-        #     delete_employee(emps)
+        if inp == 4:
+            print('\n********** Xóa nhân viên theo ID **********\n')
+            delete_employee(emps)
         # if inp == 5:
         #     print('\n********** Xóa bộ phận theo ID **********\n')
         #     delete_department(depts, emps)

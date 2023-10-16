@@ -16,8 +16,8 @@ class Manager(Employee):
         # self.is_manager = 1
 
     def __str__(self) -> str:
-        out = f'Mã số: {self.id}'
-        out += f'\nMã bộ phận: {self.department}'
+        out = f'Mã số: {self.id.upper()}'
+        out += f'\nMã bộ phận: {self.department.upper()}'
         out += f'\nChức vụ: Quản lý'  # to_do
         out += f'\nHọ và tên: {self.name}'
         out += f'\nHệ số lương: {format_currency(self.salary_base)}'
