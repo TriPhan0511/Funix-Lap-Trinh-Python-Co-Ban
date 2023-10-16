@@ -169,11 +169,8 @@ def get_full_path(file_name):
     absolute_path = os.path.dirname(__file__)
     return f'{absolute_path}/{file_name}'
 
-# -----------------------------------------------------------------------
 
 # Write a list of custom objects (example: list of Employee objects) to a json file
-
-
 def write_list(lst, fhand):
     try:
         # json.dumps(): Serialize a Python object into a JSON string
@@ -244,4 +241,3 @@ def display_list(lst, msg='===== Display list =====', empty_msg='Empty list'):
         print(empty_msg)
     for item in lst:
         print(f'{item}\n')
-        # print(f'{item}')
