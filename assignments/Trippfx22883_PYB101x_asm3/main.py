@@ -3,6 +3,112 @@ from employee import Employee
 from manager import Manager
 from utilities import format_currency,  write_data_to_file, display_list
 from utilities_2 import fetch_departments_and_employees
+from utilities_3 import add_employee
+
+JSON_FILE_NAME = 'sample.json'
+
+
+# Create a list of options
+def create_menu():
+    items = [
+        '1. Hiển thị danh sách nhân viên.',
+        '2. Hiển thị danh sách bộ phận.',
+        '3. Thêm nhân viên mới.',
+        '4. Xóa nhân viên theo ID.',
+        '5. Xóa bộ phận theo ID.',
+        '6. Hiển thị bảng lương.',
+        '7. Chỉnh sửa nhân viên.',
+        '8. Thoát.',
+        '\nMời bạn nhập chức năng mong muốn: '
+    ]
+    return ('\n'.join(items))
+
+
+# Get choice from user
+def get_input(start=1, end=8):
+    err_msg = f'\nNhập sai.\nVui lòng nhập một số từ {start} đến {end} để lựa chọn menu!'
+        
+    while True:
+        try:
+            inp = int(input(f'\n{create_menu()}'))
+        except ValueError:
+            print(err_msg)
+            continue
+        if inp < start or inp > end:
+            print(err_msg)
+            continue
+        return inp
+
+
+# Display id and salary of an employee
+# Sample output:
+# Mã số: NV001
+# Thu nhập thực nhận: 4,961,880 (VND)
+def display_salary(emp, depts):
+    out = f'Mã số: {emp.id}'
+    out += f'\nThu nhập thực nhận: {
+        format_currency(emp.compute_salary(depts))}'
+    print(f'{out}\n')
+
+
+# Display all of employees' salaries
+def display_salaries_table(emps, depts, msg='Salaries Table'):
+    print(msg)
+    for emp in emps:
+        display_salary(emp, depts)
+
+
+def quit_program(departments, employees, success_msg, error_msg):
+    d = {
+        'departments': departments,
+        'employees': employees
+    }
+    res = write_data_to_file(JSON_FILE_NAME, d)
+    if res:
+        print(success_msg)
+    else:
+        print(error_msg)
+    exit()
+
+
+def main():
+    depts, emps = fetch_departments_and_employees(JSON_FILE_NAME)
+    while True:
+        inp = get_input(1, 8)
+        # inp = get_input()
+        if inp == 1:
+            display_list(
+                emps, '\n********** Danh sách nhân viên **********\n', 'Danh sách không có nhân viên nào.')
+        if inp == 2:
+            display_list(
+                depts, '\n********** Danh sách bộ phận **********\n', 'Danh sách không có bộ phận nào.')
+        if inp == 3:
+            print('\n********** Thêm nhân viên mới **********\n')
+            add_employee(depts, emps)
+        # if inp == 4:
+        #     print('\n********** Xóa nhân viên theo ID **********\n')
+        #     delete_employee(emps)
+        # if inp == 5:
+        #     print('\n********** Xóa bộ phận theo ID **********\n')
+        #     delete_department(depts, emps)
+        # if inp == 6:
+        #     display_salaries_table(
+        #         emps, depts, '\n********** Hiển thị bảng lương **********\n')
+        # if inp == 7:
+        #     edit_employee(
+        #         emps, '\n********** Chỉnh sửa nhân viên **********\n')
+        if inp == 8:
+            quit_program(depts, emps,
+                         f'\nĐã lưu dữ liệu vào file "{JSON_FILE_NAME}"\n.', '\nĐã có lỗi xảy ra trong quá trình lưu dữ liệu.\n')
+
+
+if __name__ == '__main__':
+    main()
+from department import Department
+from employee import Employee
+from manager import Manager
+from utilities import format_currency,  write_data_to_file, display_list
+from utilities_2 import fetch_departments_and_employees
 from utilities_3 import add_employee, delete_employee, edit_employee, delete_department, get_string
 
 JSON_FILE_NAME = 'sample.json'
@@ -38,18 +144,6 @@ def get_input(start=1, end=8):
             print(err_msg)
             continue
         return inp
-# # Get choice from user
-# def get_input():
-#     while True:
-#         try:
-#             inp = int(input(f'\n{create_menu()}'))
-#         except ValueError:
-#             print('\nNhập sai.\nVui lòng nhập một số từ 1 đến 7 để lựa chọn menu!')
-#             continue
-#         if inp < 1 or inp > 7:
-#             print('\nNhập sai.\nVui lòng nhập một số từ 1 đến 7 để lựa chọn menu!')
-#             continue
-#         return inp
 
 
 # Display id and salary of an employee
@@ -70,35 +164,6 @@ def display_salaries_table(emps, depts, msg='Salaries Table'):
         display_salary(emp, depts)
 
 
-# # Quit the program
-# def quit_program(departments, employees, success_msg, error_msg,changed=False):
-#     if not changed:
-#         print('Quitting...')
-#         exit()
-#     while True:
-#         err_msg = 'Nhập sai. Vui lòng nhập "y" or "n.'
-#         choice = get_string('Bạn có muốn lưu lại các thay đổi không? (y/n)', err_msg)
-#         choice = choice.lower()
-#         if choice not in ['y', 'n']:
-#             print(err_msg)
-#             continue
-#         break
-#     if choice == 'n':
-#         print('Quitting...')
-#         exit()
-#     d = {
-#         'departments': departments,
-#         'employees': employees
-#     }
-#     res = write_data_to_file(JSON_FILE_NAME, d)
-#     if res:
-#         print(success_msg)
-#     else:
-#         print(error_msg)
-#     exit()
-
-
-# Quit the program
 def quit_program(departments, employees, success_msg, error_msg):
     d = {
         'departments': departments,
@@ -145,3 +210,215 @@ def main():
 
 if __name__ == '__main__':
     main()
+# from department import Department
+# from employee import Employee
+# from manager import Manager
+# from utilities import format_currency,  write_data_to_file, display_list
+# from utilities_2 import fetch_departments_and_employees
+# from utilities_3 import add_employee, delete_employee, edit_employee, delete_department, get_string
+
+# JSON_FILE_NAME = 'sample.json'
+
+
+# # Create a list of options
+# def create_menu():
+#     items = [
+#         '1. Hiển thị danh sách nhân viên.',
+#         '2. Hiển thị danh sách bộ phận.',
+#         '3. Thêm nhân viên mới.',
+#         '4. Xóa nhân viên theo ID.',
+#         '5. Xóa bộ phận theo ID.',
+#         '6. Hiển thị bảng lương.',
+#         '7. Chỉnh sửa nhân viên.',
+#         '8. Thoát.',
+#         '\nMời bạn nhập chức năng mong muốn: '
+#     ]
+#     return ('\n'.join(items))
+
+
+# # Get choice from user
+# def get_input(start=1, end=8):
+#     err_msg = f'\nNhập sai.\nVui lòng nhập một số từ {start} đến {end} để lựa chọn menu!'
+        
+#     while True:
+#         try:
+#             inp = int(input(f'\n{create_menu()}'))
+#         except ValueError:
+#             print(err_msg)
+#             continue
+#         if inp < start or inp > end:
+#             print(err_msg)
+#             continue
+#         return inp
+
+
+# # Display id and salary of an employee
+# # Sample output:
+# # Mã số: NV001
+# # Thu nhập thực nhận: 4,961,880 (VND)
+# def display_salary(emp, depts):
+#     out = f'Mã số: {emp.id}'
+#     out += f'\nThu nhập thực nhận: {
+#         format_currency(emp.compute_salary(depts))}'
+#     print(f'{out}\n')
+
+
+# # Display all of employees' salaries
+# def display_salaries_table(emps, depts, msg='Salaries Table'):
+#     print(msg)
+#     for emp in emps:
+#         display_salary(emp, depts)
+
+
+# def quit_program(departments, employees, success_msg, error_msg):
+#     d = {
+#         'departments': departments,
+#         'employees': employees
+#     }
+#     res = write_data_to_file(JSON_FILE_NAME, d)
+#     if res:
+#         print(success_msg)
+#     else:
+#         print(error_msg)
+#     exit()
+
+
+# def main():
+#     depts, emps = fetch_departments_and_employees(JSON_FILE_NAME)
+#     while True:
+#         inp = get_input(1, 8)
+#         # inp = get_input()
+#         if inp == 1:
+#             display_list(
+#                 emps, '\n********** Danh sách nhân viên **********\n', 'Danh sách không có nhân viên nào.')
+#         if inp == 2:
+#             display_list(
+#                 depts, '\n********** Danh sách bộ phận **********\n', 'Danh sách không có bộ phận nào.')
+#         if inp == 3:
+#             print('\n********** Thêm nhân viên mới **********\n')
+#             add_employee(depts, emps)
+#         if inp == 4:
+#             print('\n********** Xóa nhân viên theo ID **********\n')
+#             delete_employee(emps)
+#         if inp == 5:
+#             print('\n********** Xóa bộ phận theo ID **********\n')
+#             delete_department(depts, emps)
+#         if inp == 6:
+#             display_salaries_table(
+#                 emps, depts, '\n********** Hiển thị bảng lương **********\n')
+#         if inp == 7:
+#             edit_employee(
+#                 emps, '\n********** Chỉnh sửa nhân viên **********\n')
+#         if inp == 8:
+#             quit_program(depts, emps,
+#                          f'\nĐã lưu dữ liệu vào file "{JSON_FILE_NAME}"\n.', '\nĐã có lỗi xảy ra trong quá trình lưu dữ liệu.\n')
+
+
+# if __name__ == '__main__':
+#     main()
+# from department import Department
+# from employee import Employee
+# from manager import Manager
+# from utilities import format_currency,  write_data_to_file, display_list
+# from utilities_2 import fetch_departments_and_employees
+# from utilities_3 import add_employee, delete_employee, edit_employee, delete_department, get_string
+
+# JSON_FILE_NAME = 'sample.json'
+
+
+# # Create a list of options
+# def create_menu():
+#     items = [
+#         '1. Hiển thị danh sách nhân viên.',
+#         '2. Hiển thị danh sách bộ phận.',
+#         '3. Thêm nhân viên mới.',
+#         '4. Xóa nhân viên theo ID.',
+#         '5. Xóa bộ phận theo ID.',
+#         '6. Hiển thị bảng lương.',
+#         '7. Chỉnh sửa nhân viên.',
+#         '8. Thoát.',
+#         '\nMời bạn nhập chức năng mong muốn: '
+#     ]
+#     return ('\n'.join(items))
+
+
+# # Get choice from user
+# def get_input(start=1, end=8):
+#     err_msg = f'\nNhập sai.\nVui lòng nhập một số từ {start} đến {end} để lựa chọn menu!'
+        
+#     while True:
+#         try:
+#             inp = int(input(f'\n{create_menu()}'))
+#         except ValueError:
+#             print(err_msg)
+#             continue
+#         if inp < start or inp > end:
+#             print(err_msg)
+#             continue
+#         return inp
+
+
+# # Display id and salary of an employee
+# # Sample output:
+# # Mã số: NV001
+# # Thu nhập thực nhận: 4,961,880 (VND)
+# def display_salary(emp, depts):
+#     out = f'Mã số: {emp.id}'
+#     out += f'\nThu nhập thực nhận: {
+#         format_currency(emp.compute_salary(depts))}'
+#     print(f'{out}\n')
+
+
+# # Display all of employees' salaries
+# def display_salaries_table(emps, depts, msg='Salaries Table'):
+#     print(msg)
+#     for emp in emps:
+#         display_salary(emp, depts)
+
+
+# def quit_program(departments, employees, success_msg, error_msg):
+#     d = {
+#         'departments': departments,
+#         'employees': employees
+#     }
+#     res = write_data_to_file(JSON_FILE_NAME, d)
+#     if res:
+#         print(success_msg)
+#     else:
+#         print(error_msg)
+#     exit()
+
+
+# def main():
+#     depts, emps = fetch_departments_and_employees(JSON_FILE_NAME)
+#     while True:
+#         inp = get_input(1, 8)
+#         # inp = get_input()
+#         if inp == 1:
+#             display_list(
+#                 emps, '\n********** Danh sách nhân viên **********\n', 'Danh sách không có nhân viên nào.')
+#         if inp == 2:
+#             display_list(
+#                 depts, '\n********** Danh sách bộ phận **********\n', 'Danh sách không có bộ phận nào.')
+#         if inp == 3:
+#             print('\n********** Thêm nhân viên mới **********\n')
+#             add_employee(depts, emps)
+#         if inp == 4:
+#             print('\n********** Xóa nhân viên theo ID **********\n')
+#             delete_employee(emps)
+#         if inp == 5:
+#             print('\n********** Xóa bộ phận theo ID **********\n')
+#             delete_department(depts, emps)
+#         if inp == 6:
+#             display_salaries_table(
+#                 emps, depts, '\n********** Hiển thị bảng lương **********\n')
+#         if inp == 7:
+#             edit_employee(
+#                 emps, '\n********** Chỉnh sửa nhân viên **********\n')
+#         if inp == 8:
+#             quit_program(depts, emps,
+#                          f'\nĐã lưu dữ liệu vào file "{JSON_FILE_NAME}"\n.', '\nĐã có lỗi xảy ra trong quá trình lưu dữ liệu.\n')
+
+
+# if __name__ == '__main__':
+#     main()

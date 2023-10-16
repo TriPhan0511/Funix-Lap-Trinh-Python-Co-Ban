@@ -1,0 +1,84 @@
+get_string:
+msg='Nhập dữ liệu: '
+msg='Enter: '
+
+error_msg='Bạn không được bỏ trống thông tin này'
+error_msg='This part can not be empty.'
+
+
+get_float:
+msg='Nhập vào một số: '
+msg='Enter a number: '
+
+err_not_a_number_msg='Bạn phải nhập một số.'
+err_not_a_number_msg='You must enter a number.'
+
+err_less_than_zero_msg='Bạn phải nhập một số không âm'
+err_less_than_zero_msg='You must enter a number which is greater than or equal to zero.'
+
+err_equal_to_zero__msg='Bạn phải nhập một số lớn hơn 0.'
+err_equal_to_zero__msg='You must enter a number which is greater than zero.'
+
+
+get_int:
+msg='Nhập vào một số nguyên: '
+msg='Enter an integer number: '
+
+err_not_an_integer_msg='Nhập sai. Vui lòng nhập vào một số nguyên.'
+err_not_an_integer_msg='You must enter an integer number.'
+
+err_less_than_zero_msg='Bạn phải nhập một số không âm'
+err_less_than_zero_msg='You must enter a number which is greater than or equal to zero.'
+
+err_equal_to_zero__msg='You must enter a number which is greater than zero.'
+
+
+get_days:
+msg='Nhập số ngày: '
+msg='Enter number of days: '
+
+--------------------------------------------------------------------------------------
+
+def add_employee(depts, emps):
+
+get_string:
+msg='Enter: '
+msg='Nhập dữ liệu: '
+
+error_msg='This part can not be empty.'
+error_msg='Bạn không được bỏ trống thông tin này'
+
+
+get_employee_id:
+msg='Enter an ID: '
+msg='Nhập mã số: '
+
+err_msg = 'This ID was taken.\nPlease enter another.'
+err_msg = 'Mã nhân viên đã tồn tại\nVui lòng nhập một mã số khác.'
+
+
+is_manager:
+msg='Enter a position (NV/QL): '
+msg='Nhập chức vụ (NV / QL): '
+
+err_msg='You must enter "QL" if a manager or "NV" if an employee'
+err_msg='Bạn phải nhập "QL" nếu là Quản Lý hoặc nhập "NV" nếu là Nhân Viên.'
+
+
+get_name:
+msg='Enter fullname: '
+msg='Nhập họ và tên: '
+
+get_salary_base:
+msg='Enter a salary base: '
+msg='Nhập hệ số lương: '
+
+err_empty_msg = 'This part can not be empty.',
+err_empty_msg = 'Bạn không được bỏ trống thông tin này'
+
+err_not_an_integer_msg='You must enter an integer number.', 
+err_not_an_integer_msg='Nhập sai. Vui lòng nhập vào một số nguyên.'
+
+err_less_than_or_equal_to_zero_msg='You must enter a number which is greater than zero.'
+err_less_than_or_equal_to_zero_msg='Bạn phải nhập một số nguyên lớn hơn 0.'
+
