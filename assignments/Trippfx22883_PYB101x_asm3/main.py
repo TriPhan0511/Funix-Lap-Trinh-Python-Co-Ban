@@ -1,6 +1,6 @@
 from utilities import write_data_to_file, display_list
-from utilities_fetch_departments_and_employees_from_json_file import fetch_departments_and_employees
-from utilities_2 import add_employee, delete_employee, delete_department, display_salaries_table, edit_employee
+from utilities_2 import fetch_departments_and_employees
+from utilities_3 import add_employee, delete_employee, delete_department, display_salaries_table, edit_employee
 
 JSON_FILE_NAME = 'sample.json'
 

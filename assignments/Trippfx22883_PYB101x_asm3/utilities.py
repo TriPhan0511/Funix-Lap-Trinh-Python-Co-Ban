@@ -171,6 +171,11 @@ def get_full_path(file_name):
 
 
 # Write a list of custom objects (example: list of Employee objects) to a json file
+# Sample list:
+# lst = [
+#         Department('SALE001', 300000),
+#         Department('SALE002', 400000)
+#     ]
 def write_list(lst, fhand):
     try:
         # json.dumps(): Serialize a Python object into a JSON string
@@ -191,8 +196,28 @@ def write_list(lst, fhand):
 
 
 # Write a Python dictionary to a json file
-# The values in that dictionary are lists of custom objects
-# Example of custom objects: Objects of Department class, objects of Employee class,
+# The values in the dictionary are lists of custom objects(Department objects, Employee objects...)
+
+# Sample dictionary:
+# d = {
+#         'departments': departments,
+#         'employees': employees
+# }
+
+# Sample output file:
+# {
+# 	"departments": [
+# 		{"id": "ACCOUNTING", "bonus_salary": 450000},
+# 		{"id": "MARKETING", "bonus_salary": 1000000},
+# 		{"id": "IT", "bonus_salary": 650000},
+# 		{"id": "SALE001", "bonus_salary": 500000},
+# 		{"id": "SALE002", "bonus_salary": 550000}
+# 	],
+# 	"employees": [
+# 		{"id": "NV001", "name": "John Doe", "salary_base": 200000, "working_days": 26, "department": "ACCOUNTING", "working_performance": 1, "bonus": 500000, "late_comming_days": 0},
+# 		{"id": "NV002", "name": "Rose Mary", "salary_base": 200000, "working_days": 26, "department": "SALE002", "working_performance": 1, "bonus": 500000, "late_comming_days": 0, "is_manager": true}
+# 	]
+# }
 def write_data_to_file(file_name, d):
     keys = list(d.keys())
     values = list(d.values())
