@@ -1,9 +1,9 @@
 from department import Department
 from employee import Employee
 from manager import Manager
-from utilities import format_currency,  write_data_to_file, display_list
+from utilities import write_data_to_file, display_list
 from utilities_2 import fetch_departments_and_employees
-from utilities_3 import add_employee, delete_employee
+from utilities_3 import add_employee, delete_employee, delete_department, display_salaries_table
 
 JSON_FILE_NAME = 'sample.json'
 
@@ -40,24 +40,6 @@ def get_input(start=1, end=8):
         return inp
 
 
-# Display id and salary of an employee
-# Sample output:
-# Mã số: NV001
-# Thu nhập thực nhận: 4,961,880 (VND)
-def display_salary(emp, depts):
-    out = f'Mã số: {emp.id}'
-    out += f'\nThu nhập thực nhận: {
-        format_currency(emp.compute_salary(depts))}'
-    print(f'{out}\n')
-
-
-# Display all of employees' salaries
-def display_salaries_table(emps, depts, msg='Salaries Table'):
-    print(msg)
-    for emp in emps:
-        display_salary(emp, depts)
-
-
 def quit_program(departments, employees, success_msg, error_msg):
     d = {
         'departments': departments,
@@ -88,12 +70,12 @@ def main():
         if inp == 4:
             print('\n********** Xóa nhân viên theo ID **********\n')
             delete_employee(emps)
-        # if inp == 5:
-        #     print('\n********** Xóa bộ phận theo ID **********\n')
-        #     delete_department(depts, emps)
-        # if inp == 6:
-        #     display_salaries_table(
-        #         emps, depts, '\n********** Hiển thị bảng lương **********\n')
+        if inp == 5:
+            print('\n********** Xóa bộ phận theo ID **********\n')
+            delete_department(depts, emps)
+        if inp == 6:
+            display_salaries_table(
+                emps, depts, '\n********** Hiển thị bảng lương **********\n')
         # if inp == 7:
         #     edit_employee(
         #         emps, '\n********** Chỉnh sửa nhân viên **********\n')
@@ -146,22 +128,7 @@ def get_input(start=1, end=8):
         return inp
 
 
-# Display id and salary of an employee
-# Sample output:
-# Mã số: NV001
-# Thu nhập thực nhận: 4,961,880 (VND)
-def display_salary(emp, depts):
-    out = f'Mã số: {emp.id}'
-    out += f'\nThu nhập thực nhận: {
-        format_currency(emp.compute_salary(depts))}'
-    print(f'{out}\n')
 
-
-# Display all of employees' salaries
-def display_salaries_table(emps, depts, msg='Salaries Table'):
-    print(msg)
-    for emp in emps:
-        display_salary(emp, depts)
 
 
 def quit_program(departments, employees, success_msg, error_msg):

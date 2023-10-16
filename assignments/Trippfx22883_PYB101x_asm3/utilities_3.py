@@ -2,7 +2,7 @@ from department import Department
 from employee import Employee
 from manager import Manager
 from utilities_2 import fetch_departments_and_employees
-from utilities import display_list
+from utilities import display_list, format_currency
 
 # # Messages
 # ERR_EMPTY_MSG = 'Bạn không được bỏ trống thông tin này'
@@ -89,21 +89,6 @@ def create_new_dept_if_id_is_new(id, depts):
                 depts.append(dept)
             return True
         return False
-
-
-# Get employee's position from user input
-def get_position(msg='Nhập chức vụ (NV / QL): ', allow_empty=False):
-    while True:
-        position = get_string(msg=msg, allow_empty=allow_empty)
-        if len(position) == 0:
-            return 0
-        position = position.upper()
-        if position not in ['NV', 'QL']:
-            print('Nhập sai. Nhập "QL" nếu là Quản Lý hoặc nhập "NV" nếu là Nhân Viên.')
-            continue
-        if position == 'NV':
-            return 1
-        return 2
 
 
 # Get employee's position from user input
@@ -208,6 +193,103 @@ def add_employee(depts, emps):
     return True
 
 
+# Chỉnh sửa nhân viên
+# Nhập mã nhân viên: 'NV002'
+
+# Nhập họ và tên: ...
+# Nhập chức vụ (NV / QL): ...
+# Nhập hệ số lương: ...
+# Nhập số ngày làm việc: ...
+# Nhập hệ số hiệu quả: ...
+# Nhập thưởng: ...
+# Nhập số ngày đi muộn: ...
+
+# Đã hoàn tất chỉnh sửa
+
+# Get employee's position from user input
+def get_position(allow_empty=False):
+    while True:
+        position = get_string(msg='Nhập chức vụ (NV / QL): ', allow_empty=allow_empty)
+        # Người dùng bỏ trống thì tức là trường đó không cần chỉnh sửa.
+        if len(position) == 0:
+            return 0
+        position = position.upper()
+        if position not in ['NV', 'QL']:
+            print('Nhập sai. Nhập "QL" nếu là Quản Lý hoặc nhập "NV" nếu là Nhân Viên.')
+            continue
+        if position == 'NV':
+            return 1
+        return 2
+
+def get_emp_id_for_editing(emps):
+    ids = [emp.id.lower() for emp in emps]
+    while True:
+        id = get_string('Nhập mã nhân viên: ')
+        if id.lower() not in ids:
+            print('ID này không tồn tại')
+            return (None, None)
+        return (id, ids.index(id.lower()))
+
+# DELETE
+# Working performance should be a number and greater than zero.
+def get_working_performance(msg ='Nhập hệ số hiệu quả:', allow_empty=False):
+    while True:
+        inp = get_string(msg=msg, allow_empty=allow_empty)
+        if len(inp) == 0:
+            return None
+        try:
+            number = float(inp)
+        except ValueError:
+            print('Bạn phải nhập vào một số.')
+            continue
+        if number <= 0:
+            print('Bạn phải nhập một số không âm')
+            continue
+        return number
+
+def edit_employee(emps):
+    print('Chỉnh sửa nhân viên')
+    err_msg = 'Bạn cần nhập đúng định dạng'
+    id, pos = get_emp_id_for_editing(emps)
+    if id == None:
+        return False
+    emp = emps[pos]
+    name = get_name(msg='\nNhập họ và tên: ', allow_empty=True)
+    # Người dùng bỏ trống thì tức là trường đó không cần chỉnh sửa.
+    if len(name) == 0:
+        name = emp.name
+    # 0: No edit, 1: Employee, 2: Manager
+    position = get_position(allow_empty=True)
+    salary_base = get_salary_base(allow_empty=True)
+    if salary_base == None:
+        salary_base = emp.salary_base
+    working_days = get_days_2(msg='Nhập số ngày làm việc: ', allow_empty=True)
+    if working_days == None:
+        working_days = emp.working_days
+    working_performance = get_working_performance(
+        msg='Nhập hệ số hiệu quả: ', err_not_a_number_msg=err_msg, allow_empty=True)
+    # working_performance = get_float(
+    #     msg='Nhập hệ số hiệu quả: ', err_not_a_number_msg=err_msg, allow_empty=True)
+    if working_performance == None:
+        working_performance = emp.working_performance
+    bonus = get_int(msg='Nhập thưởng: ', err_not_an_integer_msg=err_msg, allow_empty=True)
+    if bonus == None:
+        bonus = emp.bonus
+    late_comming_days = get_days_2(msg='Nhập số ngày đi muộn: ', allow_empty=True) # done
+    if late_comming_days == None:
+        late_comming_days = emp.late_comming_days
+
+    is_manager = isinstance(emp, Manager)
+    if position == 1 or (position == 0 and not is_manager):
+        emps[pos] = Employee(id, name, salary_base, working_days,
+                             emp.department, working_performance, bonus, late_comming_days)
+    elif position == 2 or (position == 0 and is_manager):
+        emps[pos] = Manager(id, name, salary_base, working_days,
+                            emp.department, working_performance, bonus, late_comming_days)
+
+    print('\nĐã hoàn tất chỉnh sửa')
+    return True
+
 
 # def edit_employee(emps, msg='Edit Employee'):
 #     print(msg)
@@ -267,31 +349,42 @@ def delete_employee(emps):
     return True
 
 
-# def delete_department(depts, emps):
-#     dept_ids_in_emps = [e.department.lower() for e in emps]
-#     ids = [dept.id.lower() for dept in depts]
-#     id = get_string('Nhập mã bộ phận muốn xóa: ')
-#     id = id.lower()
-#     if id not in ids:
-#         print('\nMã bộ phận không tồn tại')
-#         return False
-#     if id in dept_ids_in_emps:
-#         print('\nBạn không thể xóa bộ phận đang có nhân viên')
-#         return False
-#     pos = ids.index(id)
-#     depts.pop(pos)
-#     print('\nĐã xóa thành công')
-#     return True
+def delete_department(depts, emps):
+    ids = [dept.id.lower() for dept in depts]
+    dept_ids_in_emps = [e.department.lower() for e in emps]
+    id = get_string('Nhập mã bộ phận muốn xóa: ')
+    id = id.lower()
+    if id not in ids:
+        print('\nMã bộ phận không tồn tại')
+        return False
+    if id in dept_ids_in_emps:
+        print('\nBạn không thể xóa bộ phận đang có nhân viên')
+        return False
+    pos = ids.index(id)
+    depts.pop(pos)
+    print('\nĐã xóa thành công')
+    return True
 
 
-# def get_emp_id_for_editing(emps, msg='Nhập mã nhân viên: ', not_exist_id_msg='ID này không tồn tại'):
-#     ids = [emp.id.lower() for emp in emps]
-#     while True:
-#         id = get_string(msg)
-#         if id.lower() not in ids:
-#             print(not_exist_id_msg)
-#             return (None, None)
-#         return (id, ids.index(id.lower()))
+# Display id and salary of an employee
+# Sample output:
+# Mã số: NV001
+# Thu nhập thực nhận: 4,961,880 (VND)
+def display_salary(emp, depts):
+    out = f'Mã số: {emp.id.upper()}'
+    out += f'\nThu nhập thực nhận: {
+        format_currency(emp.compute_salary(depts))}'
+    print(f'{out}\n')
+
+
+# Display all of employees' salaries
+def display_salaries_table(emps, depts, msg='Salaries Table'):
+    print(msg)
+    for emp in emps:
+        display_salary(emp, depts)
+
+
+
 
 
 

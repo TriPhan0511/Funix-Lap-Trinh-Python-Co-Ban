@@ -4,7 +4,6 @@
 		{"id": "sale002", "bonus_salary": 500000}
 	],
 	"employees": [
-		{"id": "NV001", "name": "Mary", "salary_base": 200000, "working_days": 0, "department": "SALE001", "working_performance": 1.5, "bonus": 0, "late_comming_days": 1, "is_manager": true},
 		{"id": "NV002", "name": "John", "salary_base": 150000, "working_days": 20, "department": "Sale001", "working_performance": 1.2, "bonus": 200000, "late_comming_days": 0},
 		{"id": "nv003", "name": "Kevin", "salary_base": 300000, "working_days": 21, "department": "sale002", "working_performance": 1.34, "bonus": 200000, "late_comming_days": 0, "is_manager": true}
 	]

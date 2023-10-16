@@ -47,11 +47,12 @@ class Employee:
         return out
 
     def compute_bonus_salary(self, depts=[]):
-        lst = [(dept.id, dept.bonus_salary) for dept in depts]
-        dept_id = self.department
+        lst = [(dept.id.lower(), dept.bonus_salary) for dept in depts]
+        dept_id = self.department.lower()
         for id, bonus_salary in lst:
             if id == dept_id:
                 return bonus_salary
+    
 
     # 3. Viết hàm tính lương cho nhân viên
     # tổng thu nhập chưa thưởng = (salary_base * working_days) * working_performance
@@ -70,13 +71,11 @@ class Employee:
     # lương thực nhận = tổng thu nhập chưa thuế - khoản thuế cần nộp
 
     def compute_salary(self, depts=[]):
-        tong_thu_nhap_chua_thuong = self.salary_base * \
-            self.working_days * self.working_performance
+        tong_thu_nhap_chua_thuong = self.salary_base * self.working_days * self.working_performance
 
-        thuong_bo_phan = self.compute_bonus_salary(depts)
+        thuong_bo_phan = self.compute_bonus_salary(depts) # None?
         phat_di_muon = compute_fine(self.url_fines, self.late_comming_days)
-        tong_thu_nhap = tong_thu_nhap_chua_thuong + \
-            self.bonus + thuong_bo_phan - phat_di_muon
+        tong_thu_nhap = tong_thu_nhap_chua_thuong + self.bonus + thuong_bo_phan - phat_di_muon
 
         tong_thu_nhap_chua_thue = tong_thu_nhap * 89.5 / 100
 
