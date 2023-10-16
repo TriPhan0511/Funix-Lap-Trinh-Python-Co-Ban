@@ -13,7 +13,6 @@ class Manager(Employee):
         self.bonus = bonus
         self.late_comming_days = late_comming_days
         self.is_manager = True
-        # self.is_manager = 1
 
     def __str__(self) -> str:
         out = f'Mã số: {self.id.upper()}'
@@ -25,7 +24,6 @@ class Manager(Employee):
         out += f'\nHệ số hiệu quả: {self.working_performance}'
         out += f'\nThưởng: {format_currency(self.bonus)}'
         out += f'\nSố ngày đi muộn: {self.late_comming_days}'
-        # out += f'\nTEST - Lương thực nhận: {format_currency(self.compute_salary())}'
         return out
 
     # Overwrite the "compute_bonus_salary" method

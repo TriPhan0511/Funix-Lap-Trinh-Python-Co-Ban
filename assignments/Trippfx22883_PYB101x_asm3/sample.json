@@ -1,10 +1,14 @@
 {
 	"departments": [
 		{"id": "SALE001", "bonus_salary": 300000},
-		{"id": "sale002", "bonus_salary": 500000}
+		{"id": "sale002", "bonus_salary": 500000},
+		{"id": "Henry", "bonus_salary": 234},
+		{"id": "it", "bonus_salary": 123456}
 	],
 	"employees": [
-		{"id": "NV002", "name": "John", "salary_base": 150000, "working_days": 20, "department": "Sale001", "working_performance": 1.2, "bonus": 200000, "late_comming_days": 0},
-		{"id": "nv003", "name": "Kevin", "salary_base": 300000, "working_days": 21, "department": "sale002", "working_performance": 1.34, "bonus": 200000, "late_comming_days": 0, "is_manager": true}
+		{"id": "nv002", "name": "John Doe", "salary_base": 150000, "working_days": 0, "department": "Sale001", "working_performance": 1.0, "bonus": 0, "late_comming_days": 0},
+		{"id": "nv003", "name": "Kevin", "salary_base": 300000, "working_days": 21, "department": "sale002", "working_performance": 1.34, "bonus": 200000, "late_comming_days": 0, "is_manager": true},
+		{"id": "NV004", "name": "Henry", "salary_base": 1, "working_days": 1, "department": "Henry", "working_performance": 1.0, "bonus": 1, "late_comming_days": 1, "is_manager": true},
+		{"id": "nv005", "name": "Mark", "salary_base": 500000, "working_days": 12, "department": "it", "working_performance": 1.2, "bonus": 200000, "late_comming_days": 1}
 	]
 }

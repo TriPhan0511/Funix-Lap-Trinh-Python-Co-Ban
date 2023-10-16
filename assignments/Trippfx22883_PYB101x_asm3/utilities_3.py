@@ -152,6 +152,7 @@ def get_days_2(msg= 'Nhập số ngày:', total_days_in_month=31, allow_empty=Fa
 def get_working_performance(msg ='Nhập hệ số hiệu quả:', allow_empty=False):
     while True:
         inp = get_string(msg=msg, allow_empty=allow_empty)
+        # Người dùng bỏ trống thì tức là trường đó không cần chỉnh sửa.
         if len(inp) == 0:
             return None
         try:
@@ -206,11 +207,12 @@ def add_employee(depts, emps):
 
 # Đã hoàn tất chỉnh sửa
 
+
 # Get employee's position from user input
+# 0: No edit; 1: Employee; 2: Manager
 def get_position(allow_empty=False):
     while True:
         position = get_string(msg='Nhập chức vụ (NV / QL): ', allow_empty=allow_empty)
-        # Người dùng bỏ trống thì tức là trường đó không cần chỉnh sửa.
         if len(position) == 0:
             return 0
         position = position.upper()
@@ -230,22 +232,7 @@ def get_emp_id_for_editing(emps):
             return (None, None)
         return (id, ids.index(id.lower()))
 
-# DELETE
-# Working performance should be a number and greater than zero.
-def get_working_performance(msg ='Nhập hệ số hiệu quả:', allow_empty=False):
-    while True:
-        inp = get_string(msg=msg, allow_empty=allow_empty)
-        if len(inp) == 0:
-            return None
-        try:
-            number = float(inp)
-        except ValueError:
-            print('Bạn phải nhập vào một số.')
-            continue
-        if number <= 0:
-            print('Bạn phải nhập một số không âm')
-            continue
-        return number
+    
 
 def edit_employee(emps):
     print('Chỉnh sửa nhân viên')
@@ -258,7 +245,7 @@ def edit_employee(emps):
     # Người dùng bỏ trống thì tức là trường đó không cần chỉnh sửa.
     if len(name) == 0:
         name = emp.name
-    # 0: No edit, 1: Employee, 2: Manager
+    # 0: No edit; 1: Employee; 2: Manager
     position = get_position(allow_empty=True)
     salary_base = get_salary_base(allow_empty=True)
     if salary_base == None:
@@ -266,16 +253,13 @@ def edit_employee(emps):
     working_days = get_days_2(msg='Nhập số ngày làm việc: ', allow_empty=True)
     if working_days == None:
         working_days = emp.working_days
-    working_performance = get_working_performance(
-        msg='Nhập hệ số hiệu quả: ', err_not_a_number_msg=err_msg, allow_empty=True)
-    # working_performance = get_float(
-    #     msg='Nhập hệ số hiệu quả: ', err_not_a_number_msg=err_msg, allow_empty=True)
+    working_performance = get_working_performance(allow_empty=True)
     if working_performance == None:
         working_performance = emp.working_performance
-    bonus = get_int(msg='Nhập thưởng: ', err_not_an_integer_msg=err_msg, allow_empty=True)
+    bonus = get_bonus(allow_empty=True)
     if bonus == None:
         bonus = emp.bonus
-    late_comming_days = get_days_2(msg='Nhập số ngày đi muộn: ', allow_empty=True) # done
+    late_comming_days = get_days_2(msg='Nhập số ngày đi muộn: ', allow_empty=True)
     if late_comming_days == None:
         late_comming_days = emp.late_comming_days
 
